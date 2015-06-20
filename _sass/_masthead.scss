@@ -5,7 +5,6 @@
 .masthead {
   padding-top:    1rem;
   padding-bottom: 1rem;
-  margin-bottom: 3rem;
 }
 
 .masthead-title {
@@ -23,4 +22,21 @@
     color: #c0c0c0;
     letter-spacing: 0;
   }
+}
+
+.masthead-navs {
+  // padding-left: 2rem;
+  li{
+    // first-child{
+    //   padding-left: 0;
+    // }
+    display: inline;
+    padding: 0 2px;
+
+    a{
+      color: $link_muted_color;
+    }
+  }
+
+
 }

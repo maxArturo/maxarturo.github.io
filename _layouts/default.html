@@ -11,6 +11,13 @@
           <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
           <small>{{ site.tagline }}</small>
         </h3>
+        <div class="masthead-navs">
+          <ul>
+          <li>  <a href="{{ site.baseurl }}/posts/" >Older posts</a></li>
+          <li> | </li>
+          <li> <a href="{{ site.baseurl }}/about/" >About</a> </li>
+          </ul>
+        </div>
       </header>
 
       <main>
@@ -19,7 +26,7 @@
 
       <footer class="footer">
         <small>
-          &copy; <time datetime="{{ site.time | date_to_xmlschema }}">{{ site.time | date: '%Y' }}</time>. All rights reserved.
+          &copy; <time datetime="{{ site.time | date_to_xmlschema }}">{{ site.time | date: '%Y' }}</time> {{ site.author.name }}. All rights reserved.
         </small>
       </footer>
     </div>
