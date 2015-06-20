@@ -3,28 +3,21 @@ layout: page
 title: About
 ---
 
-<p class="message">
-  Hey there! This page is included as an example. Feel free to customize it for your own use upon downloading. Carry on!
-</p>
 
-In the novel, *The Strange Case of Dr. Jekyll and Mr. Hyde*, Mr. Poole is Dr. Jekyll's virtuous and loyal butler. Similarly, Poole is an upstanding and effective butler that helps you build Jekyll themes. It's made by [@mdo](https://twitter.com/mdo).
+>   *[After all], writing literature is a guided dream.*
+>
+>   *J.L. Borges*
 
-There are currently two themes built on Poole:
+I like to thing that all creative endeavors benefit from mutual interaction within one's mind. With that effort (and to keep a general appearance of still being alive to the web community) I strive to write my own guided thoughts.
 
-* [Hyde](http://hyde.getpoole.com)
-* [Lanyon](http://lanyon.getpoole.com)
+Developing a cohesive narrative out of the never-ending stream of consciousness in our minds is a true burden, a skill that few are born into and most have to strain to harness. In modern type-writing times, every triumphant paragraph written is celebrated with a [carriage return](https://en.wikipedia.org/wiki/Carriage_return) and a [line feed](https://en.wiktionary.org/wiki/line_feed) - nowadays less pompously represented by the enter key. This blog's name captures that act in hopes of repeating it as many times as possible and share my inner thoughts with the world at large. 
 
-Learn more and contribute on [GitHub](https://github.com/poole).
+Herein you will find some thoughts of mine that I find worth writing (which thankfully shares a minimal cross-section with the full set of my thoughts). Musings on recent reads, Ruby code, and the generic cacophony of current events shall be guests to this humble virtual slate of mine. I hope you find meaningul and thought-provoking content here.
 
-## Setup
+Carriage return, line feed.
 
-Some fun facts about the setup of this project include:
 
-* Built for [Jekyll](http://jekyllrb.com)
-* Developed on GitHub and hosted for free on [GitHub Pages](https://pages.github.com)
-* Coded with [Sublime Text 2](http://sublimetext.com), an amazing code editor
-* Designed and developed while listening to music like [Blood Bros Trilogy](https://soundcloud.com/maddecent/sets/blood-bros-series)
+## Development
+I used [Poole](http://demo.getpoole.com) as a starting point for the prebaked blog. It is based off of [Jekyll](http://jekyllrb.com). It's pretty awesome.
 
-Have questions or suggestions? Feel free to [open an issue on GitHub](https://github.com/poole/poole/issues/new) or [ask me on Twitter](https://twitter.com/mdo).
-
-Thanks for reading!
+However, if you find something that drives you mad enough to reach out to me, raise a pull request/issue. Surprise me!
