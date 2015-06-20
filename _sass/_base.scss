@@ -25,7 +25,7 @@ html {
 }
 
 body {
-  color: #515151;
+  color: $body_base_color;
   background-color: #fff;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
@@ -33,8 +33,9 @@ body {
 
 // No `:visited` state is required by default (browsers will use `a`)
 a {
-  color: #268bd2;
+  color: $link_main_color;
   text-decoration: none;
+  font-weight: bold;
 
   // `:focus` is linked to `:hover` for basic accessibility
   &:hover,
