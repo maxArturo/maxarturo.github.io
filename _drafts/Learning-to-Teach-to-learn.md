@@ -1,24 +1,12 @@
 ---
 layout: post
-title: Learning to Teach to Learn
+title: Learning to Teach
 ---
 
-Everyone has frustrating moments with their significant other at some point in time. If you were to ask someone who is married what is
+Everyone has frustrating moments with their significant other at some point in time. If you were to ask my wife, she'd tell you immediately that I don't explain things properly. In her mind, things must be processed perfectly and without any loss of context, meaning or precision – and perfectly formed for her mental consumption. Although thats *her* viewpoint, I actually think I explain things rather well (ahem).
 
+Regardless, we've been able to have very meaningful conversations ever since we met. And now that she is learning programming and non-trivial CS concepts, I am very happy to be available to her and help with any questions she has.
 
-
-
-
-The wife and I sold many objects (not enough in her mind), loaded our various effects into an 18-ft. bullpup truck and hauled ourselves into the Mid-West, a term I still struggle understanding (as Chicago is obviously in the longitudinal center of the US).
-
-I have also started my first legit developer employment - finally the time to put all that wisdom that has been accumulating in my browser bookmarks to work! I'm really looking forward to new ideas and have already found myself learning a bunch in the little time I've been coding for a living.
-
-After the ritualistic dumping of old things and rearrangement of furniture, I've finally had the time to reassess my ongoing projects and my to-do list created at the beginning of the year. I've been inspired by the new scenery and the sad fact that I've read less than 10% of my book collection (granted, they are *large* books) and have decided to **get moving**. Every single errand in my to-do list is worth pursuing and I now get a rush of excitement when that happens. Lo and behold, it is *all in our minds*.
-
-One of the items was my blog - it has been deprived of love lately, and I have an awfully long gap in between my latest posts. I could say I've been very busy with work and personal projects, but the truth is that I suffered from a lack of discipline. I'd gone off and heavily customized my [Octopress](https://github.com/imathis/octopress) site a while back, and it had become bloated and crummy. It is chock full of features, but I realized it was distracting me from my text. And [content is king](http://www.craigbailey.net/content-is-king-by-bill-gates/). Not good.
-
-Listen: I was cruising in my web browser, and found an awesome spin by [@mdo](https://github.com/mdo) (of Bootstrap fame) in a clean, sleek design which did exactly what I wanted. It's called [Poole](http://demo.getpoole.com) and I love its simplicity. Even better - it's got enough structure to run with it, but I'm also hoping to review the SASS with the wife so she can get familiarized with this one. I've tweaked some styling to my liking and added some basic listing to appease any with the patience to go back through previous posts. If you like the tweaks head over to the [repo](https://github.com/maxArturo/maxarturo.github.io) and nab yourself a copy.
-
-And what will happen with the older posts, say you? Well they'll be migrated later, of course. Or maybe not. This is one of the benefits of a reboot - you get to recreate the universe, albeit a really small one. Oh well.
+It's something that I've discovered as of recently - throughout my time learning about programming and learning about learning to program (emphasis placed), I get a lot of pleasure from helping others and giving them the tools to internalize knowledge. I've started going to more meetups and find myself talking to a lot of people who are just starting out, and this gives me a chance to improve my communication and knowledge-sharing skills. What I've found more surprising is the sheer variet of the people that show up willing to put the time, effort (and many times money) into learning the craft. A number of them are very honest and fully subscribe to what [Mr. Januska](http://antjanus.com/blog/thoughts-and-opinions/im-a-developer-but-its-not-my-passion/) mentioned in his provoking post recently. Namely, that they don't neccesarily have a *burning* passion to learn to program, but that the industry is very rewarding towards those who are able to `code` and that they are willing to retool themselves to be a part of this economic boom. I do warn these folks that you will have a [bad time](https://www.youtube.com/watch?v=6Ls5j5iz2eA)
 
 *-Max*

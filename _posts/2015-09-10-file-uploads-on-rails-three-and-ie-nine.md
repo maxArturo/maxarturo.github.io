@@ -3,9 +3,9 @@ layout: post
 title: Working with file uploads on IE9 and Rails < 4
 ---
 
-I am trying to get back into the swing of documenting my findings as I wrestle with tough bugs and issues. Often times I just plough on with the solution but don't bother to reflect on how I got to it, and it's a valuable excercise to train one's train of thought.
+I am trying to get back into the swing of documenting my findings as I wrestle with tough bugs and issues. Often times I just plough on with the solution but don't bother to reflect on how I got to it, and it's a valuable excercise to train one's train of thought. In other words, **warning**: You are about to head into a rant of rabbit holes and sad IE exceptions.
 
-[That's nice and all, but how did you end up working out the file upload?](#solution)
+[Click here to just get to the solution I found.](#solution)
 
 Sadly though, some stories don't end up with a happy closure. There are times where one must lick one's wounds and surrender to a completely different solution than what one expected. Let me explain the quandary.
 
