@@ -4,7 +4,7 @@ layout: post
 title: Setting up code blocks in org mode
 ---
 
-Usually when taking notes, I like inserting code snippets to refer to commmands or neat ways of solving things. For those familiar with markdown this is ubiquitous with using backticks (`` ` ``) for in-line snippets, and triple ticsk (`` ``` ``) to start and end an entire code block. 
+Usually when taking notes, I like inserting code snippets to refer to commmands or neat ways of solving things. For those familiar with markdown this is ubiquitous with using backticks (`` ` ``) for in-line snippets, and triple ticks (`` ``` ``) to start and end an entire code block. 
 
 Now that I'm using org mode with spacemacs to take these notes, often I find myself exporting to github-flavored markdown with the export functionality provided by `markdown-toc` `markdown-mode` in org mode. However, org mode has a bit more complicated way of denoting code blocks. If you want a typescript code block you'll have to type up the following: 
 
