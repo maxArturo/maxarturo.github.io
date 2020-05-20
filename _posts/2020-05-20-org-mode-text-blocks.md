@@ -1,4 +1,3 @@
-
 ---
 layout: post
 title: Setting up code blocks in org mode
