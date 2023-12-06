@@ -1,21 +1,34 @@
-# Max Arturo's Blog and Various Thoughts
+# cl-web-churner
 
-My personal blog took a couple of revisions and ultimately collapsed whenever I yanked the cord from DreamHost. I had wanted a more minimalist inspiration - Octopress had proved itself useful, but the customization took a toll (and rather irked me). Hence, here we are starting fresh. I will do my very best to reintegrate all my previous posts. Any kind of revival of posts (and written text, for that matter) begs for the proof of inherent worth of the text - something I'd rather not think of at the moment. 
+> *say why are you building yet another static site generator?*
 
-Cheers! 
+This is a common lisp HTML generator, made primarily as a statement of not wanting to touch yet another build/compiler libary and/or having to relearn some other abstraction on top of a simple static site generator. It relies heavily on spinneret to generate the actual HTML and cl-markdown as a side dependency to make my life easier. 
 
-## Development
-You're honestly better off forking [Poole](http://demo.getpoole.com) itself. It's pretty awesome.
-However, if you find something that drives you mad enough to reach out to me, raise a pull request/issue. Surprise me!
+Other than that, it's just eval/print all the way down.
 
-## Author
-**Max Arturo Alcala Sainz**
+## what does what
+- spinneret takes care of turning s-exprs into HTML5
+- cl-markdown lets me write in md (vs everything being a lisp string)
+- cl-interpol lets me do both of the above in a sane manner, as well as exposing the full power of lisp within markdown (!). Consider: 
 
-Based on the awesome [Poole] Jekyll theme by [@mdo](https://github.com/mdo).
+```lisp
+(let* ((some-whacky-val (perform-a-computation)
+(post (:title "wacky title"
+  :sub-title "heyoo"
+  :date "2095 Jan 99"
+  :kind :post
+  :text #?|
+
+  ## lookie here! Markdown!
+
+  and my wacky value is: ${some-whacky-val}, tada!
+
+|)))
+
+```
+
+The above just needs to get `eval`'d in a context where `perform-a-computation` is syntactically valid, and voila. 
+
+The `#?|` syntax is courtesy of `cl-interpol`. The remainder is just writing your styles and file reading/writing. I must say I'm very happy with the output.
 
 
-## License
-All content under `_posts` is Copyright Max Arturo Alcala Sainz.
-All other content is gracefully licensed under [MIT license](LICENSE.md) per the original project. 
-
-Love to all beings.

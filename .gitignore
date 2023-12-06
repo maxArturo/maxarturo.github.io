@@ -1,10 +1,12 @@
-# Ignore docs files
-_gh_pages
-_site
-.ruby-version
-.rbenv-gemsets
-.sass-cache
-.jekyll-metadata
+# base common lisp stuff
+tags
+scratch.lisp
+Session.vim
+.vscode/alive/fasl/*.lisp
+*.fasl
+.vscode
+output/
+docs/
 
 # Numerous always-ignore extensions
 *.diff
@@ -32,14 +34,3 @@ nbproject
 *.sublime-workspace
 .idea
 
-# Komodo
-*.komodoproject
-.komodotools
-
-# grunt-html-validation
-validation-status.json
-validation-report.json
-
-# Folders to ignore
-node_modules
-vendor
