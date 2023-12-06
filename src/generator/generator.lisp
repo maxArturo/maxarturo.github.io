@@ -3,9 +3,6 @@
 
 (in-package #:generator)
 
-(defmacro md-html (str)
-  `(with-html-string (,(substitute  #\U+00B1 #\~ str))))
-
 (defmacro render-page (file)
   (let* ((raw-page (uiop:read-file-form file))
          (kind (getf raw-page :kind)))
@@ -40,7 +37,6 @@
      (format output (render-page ,file))))
 #+nil
 (uiop:read-file-form #P"website/index.md")
-(write-file #P"website/index.md")
 
 (defmacro render-site ()
   (let* ((filenames 
@@ -48,5 +44,6 @@
                    (directory #p"website/**/*.md")))
          (directives (mapcar (lambda (f) `(write-file ,f)) filenames)))
     `(progn ,@directives)))
+#+nil
 (render-site)
 

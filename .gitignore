@@ -6,7 +6,6 @@ Session.vim
 *.fasl
 .vscode
 output/
-docs/
 
 # Numerous always-ignore extensions
 *.diff

@@ -2,6 +2,9 @@
 
 (in-package #:generator)
 
+(defmacro md-html (str)
+  `(with-html-string (,(substitute  #\U+00B1 #\~ str))))
+
 (defmacro with-foundation ((&key title ) &body body)
   `(with-html-string
      (:doctype)

@@ -7,7 +7,7 @@
   :license "MIT"
   :description "html static site generator in common lisp"
   :encoding :utf-8
-  :depends-on ("cl-interpol" "spinneret" "cl-markdown" "local-time" "fiveam")
+  :depends-on ("cl-interpol" "spinneret" "cl-markdown" "spinneret/cl-markdown" "local-time" "fiveam")
   :pathname "src/"
   :components
   ((:file "package")
@@ -15,6 +15,6 @@
    (:module "generator"
     :components
     (
-     (:file "generator")
      (:file "layouts")
+     (:file "generator")
      ))))

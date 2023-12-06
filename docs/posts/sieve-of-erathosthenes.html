@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang=en>
+ <head>
+  <meta charset=UTF-8>
+  <link rel=stylesheet
+        href=https://unpkg.com/tachyons/css/tachyons.min.css>
+  <style>code {
+                  background-color: gray;
+                  color: white;
+                  }</style>
+  <meta name=viewport
+        content="width=device-width, initial-scale=1.0">
+  <title>Sieve of Eratosthenes</title>
+ </head>
+ <body class="athelas pa3 pa5-l pa5-m">
+  <header>
+   <h1><a class="link dim black b db mb3 mb4-ns" href=../index.html title=M2AS>M2AS</a></h1>
+  </header>
+  <article class="cf pt3">
+   <header class="fn fl-l w-50-l pr4-l pb4">
+    <h1
+        class="f2 lh-title fw9 mb3 mt0 pt3 bt bw2">Sieve of Eratosthenes</h1>
+    <h2 class="f3 mid-gray lh-title"></h2>
+    <time class="f3 ttu tracked gray">2014-12-15</time>
+   </header>
+   <div class="fn fl-l w-50-l bt bw1 bn-l">
+    <div class="f4 lh-copy measure"><p>There's a lot of humility that goes with learning (or re-learning) topics in CS/Discrete math. I had one such instance a couple of days ago as I started reviewing my basic data structures and algorithms, and realized I remembered way less than I thought. </p><p>Now mind you, it's been roughly 4 years since I've taken an Algorithms course, and some people would say that its even worse to start out with no prior knowledge than with some vague notion. To those people, I'll argue back that despite some truth to their claim, it's nonetheless frustrating to stare back at a relatively simple algorithm <em>you knew you had down not too many years ago, it seems</em> and not really be able to grasp it. </p><p>That just happened with me this weekend with Eratosthenes. The <a href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">wikipedia article</a> does a very thorough job of explaining what it does - find prime numbers iteratively -, but what I really wanted to understand was the reasons for optimizations (which is is just hand-waved away in the first page of google links). See, I have that need always to understand assumptions and abstractions - and it becomes an unhealthy obsession until I can solve it. It was not until I found <a href="https://en.wikibooks.org/wiki/Discrete_Mathematics/Sieve_of_Eratosthenes">this wikibooks page</a> that actually went into the property of composite numbers and the reason for starting at n^2 for sieving that I got that sweet <em>aaahhh</em> moment of understanding. </p><p><!-- more --> </p><p>After that I coded up a reasonably fast <a href="https://github.com/maxArturo/programmerDaily/blob/master/unsorted/sieve_of_erathostenes.rb">implementation for ruby</a> and almost considered myself done. However, I did remain a bit frustrated by how long it took me to grasp the concept, and considered for a moment how I could both cement the knowledge and make something useful at the same time. Using the trusty old d3.js, I whipped up a <a href="http://bl.ocks.org/maxArturo/1e3abba3ddcc66017e99">visualization</a> that hopefully aids those of us who are more visual. </p><p>It definitely feels good to go through the cycle of mis(no)understanding -&gt; search -&gt; understand -&gt; implement -&gt; create something new. I'm looking forward to do the same with a bunch of my old discrete math algorithms! </p>
+    </div>
+   </div>
+  </article>
+  <footer class="pv4 ph3 ph5-m ph6-l mid-gray">
+   <span class="f3 db tc">(C) AD 2023</span>
+  </footer>
+ </body>
+</html>

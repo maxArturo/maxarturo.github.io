@@ -2,14 +2,14 @@
 
 (uiop:define-package 
   #:generator
-  (:use #:cl #:cl-interpol #:spinneret/cl-markdown #:local-time)
+  (:use #:cl #:cl-interpol #:local-time)
   (:import-from #:local-time
    #:timestamp-year
    #:now)
   (:import-from #:spinneret 
    #:with-html-string
    #:with-html)
-  (:export #:generate))
+  (:export #:render-site))
 
 (uiop:define-package 
   #:cl-web-churner

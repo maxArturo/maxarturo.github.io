@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang=en>
+ <head>
+  <meta charset=UTF-8>
+  <link rel=stylesheet
+        href=https://unpkg.com/tachyons/css/tachyons.min.css>
+  <style>code {
+                  background-color: gray;
+                  color: white;
+                  }</style>
+  <meta name=viewport
+        content="width=device-width, initial-scale=1.0">
+  <title>Rolling your own Rails Authentication</title>
+ </head>
+ <body class="athelas pa3 pa5-l pa5-m">
+  <header>
+   <h1><a class="link dim black b db mb3 mb4-ns" href=../index.html title=M2AS>M2AS</a></h1>
+  </header>
+  <article class="cf pt3">
+   <header class="fn fl-l w-50-l pr4-l pb4">
+    <h1
+        class="f2 lh-title fw9 mb3 mt0 pt3 bt bw2">Rolling your own Rails 
+     Authentication</h1>
+    <h2 class="f3 mid-gray lh-title"></h2>
+    <time class="f3 ttu tracked gray">2015-01-25</time>
+   </header>
+   <div class="fn fl-l w-50-l bt bw1 bn-l">
+    <div class="f4 lh-copy measure"><p>When I started learning Rails, my assumption is that most everything would be prepackaged and built-up, or rather prepackaged in cute little gems. I fell into one of Rail's <a href="http://david.heinemeierhansson.com/posts/33-myth-4-rails-is-a-monolith">myths</a> - as it turns out, rails is extremely flexible and it lets you cut out whatever sections you wouldn't want. </p><p>I was telling a friend of mine that I planned to roll my own authentication, and while he didn't dissuade me, he did tell me I would be better off taking something like Devise or oAuth and just 'using the gem'. Inherently I thought he was right, but I still wanted to figure out just how difficult it was. </p><p>Doing this seems pretty daunting, especially for someone who is just starting out: not just because security is a sensitive topic and it would be disastrous to get it wrong, but also because it sounds <em>hard</em> to just roll it up from scratch. However, it is completely doable with Rails - the components are exposed to you, so that you don't neccesarily have to go down to the metal if you want to implement your own solutions. </p><p>While researching this I found most SO posts will redirect you to a gem, which in all honesty is the best way to go if you're trying to crank out an app and just want the functionality to work. <strong>But</strong>, if you're learning and want that challenge, it turns out that there's a fantastic resource. Michael Hart'ls <a href="https://www.railstutorial.org/book/sign_up">intro to Rails</a> includes a gentle, but thorough guide on how to set up your own authentication and session management in Rails. </p><p>It all starts out with <a href="http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html"><code>has_secure_password</code></a>, which includes suite of validations and authentications needed to save a password digest. It's easy to use and well-documented. It uses an implementation of BCrypt, which is a hashing algorithm that secures your passwords and sensitive data should your database fall in the wrong hands. It is the same secure algorithm <a href="https://help.github.com/articles/github-security/#maintaining-security">used by github</a>, so I figured it would be good enough for me. For more details on BCrypt, see the amusing explanation by <a href="http://yorickpeterse.com/articles/use-bcrypt-fool/">Yorick Peterse</a>. </p><p>We can use the same code used by BCrypt in the Rails implementation (via <code>has_secure_password</code>) to generate our digests and save them to our models: </p><p><code></code><code>   def User.digest(input_string)     cost = ActiveModel::SecurePassword.min_cost ?       BCrypt::Engine::MIN_COST : BCrypt::Engine.cost     BCrypt::Password.create(input_string, cost: cost)   end </code><code></code> </p><p>After that, all it takes is a comparison (also extracted from the Rails BCrypt implementation) to compare your token against a hash: </p><p><code></code><code>   BCrypt::Password.new(digest).is_password?(token) </code><code></code> </p><p>Throw those into your User model and you can start authenticating passwords! </p><p>Another key ingredient that prevents us from rewriting an entire cookie handling library is the <code>session</code> and <code>cookies</code> <a href="http://api.rubyonrails.org/classes/ActionDispatch/Cookies.html">object</a>. We can write directly into the browser's session or cookies by just <strong>calling</strong> them. Take a second to reflect on how awesome that is, and you can start seeing how its <em>completely</em> feasible to write your own logic flow for logins and logouts. </p><p>Throughout this excercise, I also ran against the crux of the MVC paradigm: where should it all live? I was particularly stumped by a now obiquitious requirement: checking the current password of my user in order to let them change it in the first place. It was straightforward enough to actually make the change, but where should the verification code live? The controller seems to be able to manage that, but at the same time the model could contain the logic (and even I know this shouldn't go in the view). Some people might even propose an Angular solution. I ultimatley opted to place it in the Model, as all my validation logic would be in one cohesive location and it would flow well with <code>update_attributes</code> (some people will see some similarity with the code from a popular auth gem). </p><p>My own doubtfulness in my implementation also made me <em>extra</em> careful with my tests, and to double-triple check I've asked a couple other folks to take a look at my implementation, as well as cross check with Hartl's guide. So far so good. </p><p>With all said and done, there's one last shout-out to the Rails <a href="http://guides.rubyonrails.org/security.html">security guide</a>, which is a must-read for keeping your app and your user data safe. </p><p>The only sad part about all this learning is, I will never know if my system is good enough - there's no testing like production. </p>
+    </div>
+   </div>
+  </article>
+  <footer class="pv4 ph3 ph5-m ph6-l mid-gray">
+   <span class="f3 db tc">(C) AD 2023</span>
+  </footer>
+ </body>
+</html>
