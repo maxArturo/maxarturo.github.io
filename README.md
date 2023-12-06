@@ -1,8 +1,10 @@
-# cl-web-churner
+# [my humble Web Site](https://maxalcala.com)
 
 > *say why are you building yet another static site generator?*
+> 
+> everyone 
 
-This is a common lisp HTML generator, made primarily as a statement of not wanting to touch yet another build/compiler libary and/or having to relearn some other abstraction on top of a simple static site generator. It relies heavily on spinneret to generate the actual HTML and cl-markdown as a side dependency to make my life easier. 
+This is my blog. It's built in Common Lisp, chosen primarily as a statement of not wanting to touch yet another build/compiler libary and/or having to relearn some other abstraction on top of a simple static site generator. It relies heavily on [spinneret](https://github.com/ruricolist/spinneret) to generate the actual HTML and cl-markdown as a side dependency to make my life easier. Markdown isn't handled quite well, but that's a future bug to chase. 
 
 Other than that, it's just eval/print all the way down.
 
