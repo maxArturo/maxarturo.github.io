@@ -4,8 +4,78 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="author" content="Max A">
+  <meta name="dcterms.date" content="2016-11-01">
   <title>RxJS - Stream of cached API Responses</title>
   <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+background-color: #232629;
+color: #7a7c7d;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d; padding-left: 4px; }
+div.sourceCode
+{ color: #cfcfc2; background-color: #232629; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #cfcfc2; } 
+code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } 
+code span.an { color: #3f8058; } 
+code span.at { color: #2980b9; } 
+code span.bn { color: #f67400; } 
+code span.bu { color: #7f8c8d; } 
+code span.cf { color: #fdbc4b; font-weight: bold; } 
+code span.ch { color: #3daee9; } 
+code span.cn { color: #27aeae; font-weight: bold; } 
+code span.co { color: #7a7c7d; } 
+code span.cv { color: #7f8c8d; } 
+code span.do { color: #a43340; } 
+code span.dt { color: #2980b9; } 
+code span.dv { color: #f67400; } 
+code span.er { color: #da4453; text-decoration: underline; } 
+code span.ex { color: #0099ff; font-weight: bold; } 
+code span.fl { color: #f67400; } 
+code span.fu { color: #8e44ad; } 
+code span.im { color: #27ae60; } 
+code span.in { color: #c45b00; } 
+code span.kw { color: #cfcfc2; font-weight: bold; } 
+code span.op { color: #cfcfc2; } 
+code span.ot { color: #27ae60; } 
+code span.pp { color: #27ae60; } 
+code span.re { color: #2980b9; background-color: #153042; } 
+code span.sc { color: #3daee9; } 
+code span.ss { color: #da4453; } 
+code span.st { color: #f44f4f; } 
+code span.va { color: #27aeae; } 
+code span.vs { color: #da4453; } 
+code span.wa { color: #da4453; } 
+</style>
   <style type="text/css">.latex-sub, .latex-sup { text-transform: uppercase;
 font-size: smaller;
 position: relative; }
@@ -582,7 +652,9 @@ width: 100%;
 <article>
 <header>
 <h1 class="title">RxJS - Stream of cached API Responses</h1>
+<p class="byline">2016-11-01 – Max A</p>
 </header>
+<section>
 <p>I’ve been spending a <em>lot</em> of time in the frontend recently,
 trying to catch up with the year-ish worth of developments I haven’t
 been trully involved in. I’ve been going through React, Redux, and RxJS
@@ -627,25 +699,42 @@ below and <a href="https://jsfiddle.net/ctk2bhah/5/">fiddle</a> for
 reference.</p>
 <p>RxJS is really proving to be tricky, but we <em>might</em> just get
 along after all.</p>
-<p>{% highlight javascript %}</p>
-<p>var refreshButton = document.querySelector(‘#main’); var
-refreshClickStream = Rx.Observable.fromEvent(refreshButton,
-‘click’);</p>
-<p>var proxyStream = new Rx.Subject(); var requestStream = new
-Rx.Observable .just(‘startup’) .merge(proxyStream) .map(function() { var
-randomOffset = Math.floor(Math.random() * 5000); return
-‘https://api.github.com/users?since=’ + randomOffset; });</p>
-<p>var responseStream = requestStream.flatMap(function(requestUrl) {
-return Rx.Observable.fromPromise(fetch(requestUrl));
-}).flatMapLatest(function(response) { return
-Rx.Observable.fromPromise(response.json()); });</p>
-<p>var userOutputStream = Rx.Observable.combineLatest( responseStream,
-refreshClickStream, function(users) { return users; } );</p>
-<p>var controlStream = userOutputStream.map(function(users, i) { var
-index = i % users.length; if (!users[index + 1])
-proxyStream.onNext(‘query’); return users[i % users.length]; });</p>
-<p>controlStream.subscribe(function(user) { console.log(user) });</p>
-<p>{% endhighlight %}</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource javascript numberLines"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">var</span> refreshButton <span class="op">=</span> <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&#39;#main&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">var</span> refreshClickStream <span class="op">=</span> Rx<span class="op">.</span><span class="at">Observable</span><span class="op">.</span><span class="fu">fromEvent</span>(refreshButton<span class="op">,</span> <span class="st">&#39;click&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">var</span> proxyStream <span class="op">=</span> <span class="kw">new</span> Rx<span class="op">.</span><span class="fu">Subject</span>()<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">var</span> requestStream <span class="op">=</span> <span class="kw">new</span> Rx<span class="op">.</span><span class="at">Observable</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>    <span class="op">.</span><span class="fu">just</span>(<span class="st">&#39;startup&#39;</span>)</span>
+<span id="cb1-7"><a href="#cb1-7"></a>    <span class="op">.</span><span class="fu">merge</span>(proxyStream)</span>
+<span id="cb1-8"><a href="#cb1-8"></a>    <span class="op">.</span><span class="fu">map</span>(<span class="kw">function</span>() {</span>
+<span id="cb1-9"><a href="#cb1-9"></a>        <span class="kw">var</span> randomOffset <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">floor</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">random</span>() <span class="op">*</span> <span class="dv">5000</span>)<span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>        <span class="cf">return</span> <span class="st">&#39;https://api.github.com/users?since=&#39;</span> <span class="op">+</span> randomOffset<span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>    })<span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a></span>
+<span id="cb1-13"><a href="#cb1-13"></a><span class="kw">var</span> responseStream <span class="op">=</span> requestStream<span class="op">.</span><span class="fu">flatMap</span>(<span class="kw">function</span>(requestUrl) {</span>
+<span id="cb1-14"><a href="#cb1-14"></a>    <span class="cf">return</span> Rx<span class="op">.</span><span class="at">Observable</span><span class="op">.</span><span class="fu">fromPromise</span>(<span class="fu">fetch</span>(requestUrl))<span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>})<span class="op">.</span><span class="fu">flatMapLatest</span>(<span class="kw">function</span>(response) {</span>
+<span id="cb1-16"><a href="#cb1-16"></a>    <span class="cf">return</span> Rx<span class="op">.</span><span class="at">Observable</span><span class="op">.</span><span class="fu">fromPromise</span>(response<span class="op">.</span><span class="fu">json</span>())<span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>})<span class="op">;</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a></span>
+<span id="cb1-19"><a href="#cb1-19"></a><span class="kw">var</span> userOutputStream <span class="op">=</span> Rx<span class="op">.</span><span class="at">Observable</span><span class="op">.</span><span class="fu">combineLatest</span>(</span>
+<span id="cb1-20"><a href="#cb1-20"></a>    responseStream<span class="op">,</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>    refreshClickStream<span class="op">,</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a>    <span class="kw">function</span>(users) {</span>
+<span id="cb1-23"><a href="#cb1-23"></a>        <span class="cf">return</span> users<span class="op">;</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a>    }</span>
+<span id="cb1-25"><a href="#cb1-25"></a>)<span class="op">;</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a></span>
+<span id="cb1-27"><a href="#cb1-27"></a><span class="kw">var</span> controlStream <span class="op">=</span> userOutputStream<span class="op">.</span><span class="fu">map</span>(<span class="kw">function</span>(users<span class="op">,</span> i) {</span>
+<span id="cb1-28"><a href="#cb1-28"></a>    <span class="kw">var</span> index <span class="op">=</span> i <span class="op">%</span> users<span class="op">.</span><span class="at">length</span><span class="op">;</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a>    <span class="cf">if</span> (<span class="op">!</span>users[index <span class="op">+</span> <span class="dv">1</span>]) proxyStream<span class="op">.</span><span class="fu">onNext</span>(<span class="st">&#39;query&#39;</span>)<span class="op">;</span></span>
+<span id="cb1-30"><a href="#cb1-30"></a>    <span class="cf">return</span> users[i <span class="op">%</span> users<span class="op">.</span><span class="at">length</span>]<span class="op">;</span></span>
+<span id="cb1-31"><a href="#cb1-31"></a>})<span class="op">;</span></span>
+<span id="cb1-32"><a href="#cb1-32"></a></span>
+<span id="cb1-33"><a href="#cb1-33"></a>controlStream<span class="op">.</span><span class="fu">subscribe</span>(<span class="kw">function</span>(user) {</span>
+<span id="cb1-34"><a href="#cb1-34"></a>    <span class="bu">console</span><span class="op">.</span><span class="fu">log</span>(user)</span>
+<span id="cb1-35"><a href="#cb1-35"></a>})<span class="op">;</span></span></code></pre></div>
+</section>
 </article>
 </body>
 </html>

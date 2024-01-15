@@ -1,7 +1,11 @@
 ---
-layout: post
 title: Working with file uploads on IE9 and Rails < 4
+subtitle: 
+date: 2015-09-10
+author: Max A
 ---
+
+<section>
 
 I am trying to get back into the swing of documenting my findings as I wrestle with tough bugs and issues. Often times I just plough on with the solution but don't bother to reflect on how I got to it, and it's a valuable excercise to train one's train of thought. In other words, **warning**: You are about to head into a rant of rabbit holes and sad IE exceptions.
 
@@ -23,9 +27,12 @@ This brought me into diving into `jquery-ujs` and how it was being used in the s
 
 I've tried every use-case, scoured the SO seas and spent a couple of days in the wonderful world of frontend exceptions and IE-specific woes. And at this point, I've reached too far in. Time to back out and [actually throw a question out to the internet](https://stackoverflow.com/questions/32511830/rails-3-ie9-jquery-fileupload-no-callbacks-are-triggered).
 
-## How it All Actually Ended Up ##
+## How it All Actually Ended Up
+
 <a name="solution"></a>
 
 A coworker introduced me to [Plupload](http://www.plupload.com/), which was created in a previous era of aggressive browsers and little to no standarization. We have an app with older code that actually works with that, so I'm probably going to take that code and continue on with my life. Sometimes you have to take your learnings and move on.
 
 I wonder how that applies to the rest of one's life experience...
+
+</section>

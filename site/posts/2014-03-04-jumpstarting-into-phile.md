@@ -24,8 +24,6 @@ Within minutes (and within days of finding a quaint little hosting service that 
 
 </section>
 
-
 > <span class="newthought">Editor's note.</span> You may see that this webpage is actually hosted in [Octopress](octopress.org), a Jekyll blogging implementation with lots of handy settings in SASS and yml configurations that I recommend you check out. In the effort of looking for the most 'static' CMS system (if you can name Octopress one, it's more of an advanced HTML/CSS/JS rolling engine) I was won over by its advanced configuration settings and an introduction to Ruby at the same time.[^1] I still fully recomend Phile and encourage you to help James out if PHP is close to heart.
-> 
 
-[^1]: *see [this post]({% post_url 2015-06-20-migrate-yourself %}) for updates.*
+[^1]: *see [this post](./2019-05-05-multi-year-reboot.html) for updates.*

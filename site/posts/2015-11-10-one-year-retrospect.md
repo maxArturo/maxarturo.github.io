@@ -1,9 +1,13 @@
 ---
-layout: post
 title: Learning from a Year Old Project, Part 1
+subtitle: 
+date: 2015-11-10
+author: Max A
 ---
 
-Today marks a milestone that I didn't quite expect to reach so fast. A little over a year ago, I made the first commit of a [project](https://www.peakbucket.com) that took both me and my friend Colin by surprise, and effectively led us to create our first 'real-life' webapp. Incidentally, it provided me a stepping-stone to become a fully-employed developer and to help a lot of very cool and passionate people with peakbagging. 
+<section>
+
+Today marks a milestone that I didn't quite expect to reach so fast. A little over a year ago, I made the first commit of a [project](https://www.peakbucket.com) that took both me and my friend Colin by surprise, and effectively led us to create our first 'real-life' webapp. Incidentally, it provided me a stepping-stone to become a fully-employed developer and to help a lot of very cool and passionate people with peakbagging.
 
 It's been amazing, and I have to thank Colin for making it a [public commitment](http://psychology.about.com/od/socialinfluence/f/rule-of-commitment.htm). As we discussed the timing for release, I thought back to a year ago and considered how far I'd come since - and I was surprised to see how much this little side project had helped me grow. I picked up a bunch of learnings: some of them in developing software, but also many more in regards to working as a team and managing a part-time project on a tight schedule, all the while balancing work and family.
 
@@ -19,8 +23,10 @@ Here's a short list of what I picked up while working on a committed side projec
 
 - **Domain knowledge overlap is great - and you should develop it as much as possible.**
 
-- **Tests really *are* your friends, so write them.** Your side projects are *not* exempt from good software practices, even more so if you are planning more people to use your project down the road. When you don't have a lot of time to spend on changing things or tacking on new features, it is a godsend to not have to worry about changing things in a blink of an eye and hoping for the best. 
+- **Tests really *are* your friends, so write them.** Your side projects are *not* exempt from good software practices, even more so if you are planning more people to use your project down the road. When you don't have a lot of time to spend on changing things or tacking on new features, it is a godsend to not have to worry about changing things in a blink of an eye and hoping for the best.
 
 Are you late? So what? A lot of people say that "if you are not unhappy with your 1.0 version, then you released too late". However, it's also better to release later than never. Don't let your slips get you down – instead, think of what more you can do, and make an appointment with the project the same way you would with a dentist. [General concentration techniques](https://www.quora.com/What-are-some-techniques-you-use-to-concentrate-while-programming) apply.
 
-You have no obligations to anyone except yourself (this is *your* project, remember?), and it is in your best interest to be the most excellent boss you've ever had. Work when you feel the drive, rest when you don't, and avoid the burnout. If you keep a sustainable pace (and your project scope allows for it), you will definitely reach the year-mark and feel awesome about it. I certainly do. 
+You have no obligations to anyone except yourself (this is *your* project, remember?), and it is in your best interest to be the most excellent boss you've ever had. Work when you feel the drive, rest when you don't, and avoid the burnout. If you keep a sustainable pace (and your project scope allows for it), you will definitely reach the year-mark and feel awesome about it. I certainly do.
+
+</section>

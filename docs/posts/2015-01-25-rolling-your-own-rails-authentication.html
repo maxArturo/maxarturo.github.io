@@ -4,8 +4,78 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="author" content="Max A">
+  <meta name="dcterms.date" content="2015-01-25">
   <title>Rolling your own Rails Authentication</title>
   <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+background-color: #232629;
+color: #7a7c7d;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d; padding-left: 4px; }
+div.sourceCode
+{ color: #cfcfc2; background-color: #232629; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #cfcfc2; } 
+code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } 
+code span.an { color: #3f8058; } 
+code span.at { color: #2980b9; } 
+code span.bn { color: #f67400; } 
+code span.bu { color: #7f8c8d; } 
+code span.cf { color: #fdbc4b; font-weight: bold; } 
+code span.ch { color: #3daee9; } 
+code span.cn { color: #27aeae; font-weight: bold; } 
+code span.co { color: #7a7c7d; } 
+code span.cv { color: #7f8c8d; } 
+code span.do { color: #a43340; } 
+code span.dt { color: #2980b9; } 
+code span.dv { color: #f67400; } 
+code span.er { color: #da4453; text-decoration: underline; } 
+code span.ex { color: #0099ff; font-weight: bold; } 
+code span.fl { color: #f67400; } 
+code span.fu { color: #8e44ad; } 
+code span.im { color: #27ae60; } 
+code span.in { color: #c45b00; } 
+code span.kw { color: #cfcfc2; font-weight: bold; } 
+code span.op { color: #cfcfc2; } 
+code span.ot { color: #27ae60; } 
+code span.pp { color: #27ae60; } 
+code span.re { color: #2980b9; background-color: #153042; } 
+code span.sc { color: #3daee9; } 
+code span.ss { color: #da4453; } 
+code span.st { color: #f44f4f; } 
+code span.va { color: #27aeae; } 
+code span.vs { color: #da4453; } 
+code span.wa { color: #da4453; } 
+</style>
   <style type="text/css">.latex-sub, .latex-sup { text-transform: uppercase;
 font-size: smaller;
 position: relative; }
@@ -582,7 +652,9 @@ width: 100%;
 <article>
 <header>
 <h1 class="title">Rolling your own Rails Authentication</h1>
+<p class="byline">2015-01-25 – Max A</p>
 </header>
+<section>
 <p>When I started learning Rails, my assumption is that most everything
 would be prepackaged and built-up, or rather prepackaged in cute little
 gems. I fell into one of Rail’s <a href="http://david.heinemeierhansson.com/posts/33-myth-4-rails-is-a-monolith">myths</a>
@@ -592,7 +664,13 @@ whatever sections you wouldn’t want.</p>
 authentication, and while he didn’t dissuade me, he did tell me I would
 be better off taking something like Devise or oAuth and just ‘using the
 gem’. Inherently I thought he was right, but I still wanted to figure
-out just how difficult it was.</p>
+out just how difficult it was <span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle"></input><span class="sidenote">The reader should note I never actually used this for a
+production app where I ever expected users to be impacted because of
+some security risk. Anything that involves the exchange of money (or
+some non-trivial time) deserves to be implemented with industry-grade,
+off the shelf components. <em>Never roll your own auth, kids</em>.<br />
+<br />
+</span></span>.</p>
 <p>Doing this seems pretty daunting, especially for someone who is just
 starting out: not just because security is a sensitive topic and it
 would be disastrous to get it wrong, but also because it sounds
@@ -604,9 +682,11 @@ own solutions.</p>
 gem, which in all honesty is the best way to go if you’re trying to
 crank out an app and just want the functionality to work.
 <strong>But</strong>, if you’re learning and want that challenge, it
-turns out that there’s a fantastic resource. Michael Hart’ls <a href="https://www.railstutorial.org/book/sign_up">intro to Rails</a>
+turns out that there’s a fantastic resource. <span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"></input><span class="sidenote">I personally followed Michael Hart’ls <a href="https://www.railstutorial.org/book/sign_up">intro to Rails</a>. It
 includes a gentle, but thorough guide on how to set up your own
-authentication and session management in Rails.</p>
+authentication and session management in Rails.<br />
+<br />
+</span></span></p>
 <p>It all starts out with <a href="http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html">has_secure_password</a>,
 which includes suite of validations and authentications needed to save a
 password digest. It’s easy to use and well-documented. It uses an
@@ -619,14 +699,14 @@ Peterse</a>.</p>
 <p>We can use the same code used by BCrypt in the Rails implementation
 (via <code>has_secure_password</code>) to generate our digests and save
 them to our models:</p>
-<p>{% highlight ruby %} def User.digest(input_string) cost =
-ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-BCrypt::Engine.cost BCrypt::Password.create(input_string, cost: cost)
-end {% endhighlight %}</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">def</span> <span class="dt">User</span><span class="at">.digest</span>(input_string)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    cost <span class="kw">=</span> <span class="dt">ActiveModel</span><span class="kw">::</span><span class="dt">SecurePassword</span><span class="at">.min_cost</span> ?</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">BCrypt</span><span class="kw">::</span><span class="dt">Engine</span><span class="kw">::</span><span class="cn">MIN_COST</span> : <span class="dt">BCrypt</span><span class="kw">::</span><span class="dt">Engine</span><span class="at">.cost</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">BCrypt</span><span class="kw">::</span><span class="dt">Password</span><span class="at">.create</span>(input_string, <span class="wa">cost: </span>cost)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span></code></pre></div>
 <p>After that, all it takes is a comparison (also extracted from the
 Rails BCrypt implementation) to compare your token against a hash:</p>
-<p>{% highlight ruby %} BCrypt::Password.new(digest).is_password?(token)
-{% endhighlight %}</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="dt">BCrypt</span><span class="kw">::</span><span class="dt">Password</span><span class="at">.new</span>(digest)<span class="at">.is_password?</span>(token)</span></code></pre></div>
 <p>Throw those into your User model and you can start authenticating
 passwords!</p>
 <p>Another key ingredient that prevents us from rewriting an entire
@@ -648,27 +728,28 @@ solution. I ultimatley opted to place it in the Model, as all my
 validation logic would be in one cohesive location and it would flow
 well with <code>update_attributes</code> (some people will see some
 similarity with the code from a popular auth gem):</p>
-<p>{% highlight ruby %} def update_with_password(params, *options)
-current_password = params.delete(:current_password)</p>
-<pre><code>assign_and_check = lambda { |user|
-  user.assign_attributes(params, *options)
-  user.valid? }
-
-result = if params[:password].blank?
-  assign_and_check.call self
-  self.errors.add(:password, :blank)
-  false
-elsif authenticate(current_password)
-  update_attributes(params, *options)
-else
-  assign_and_check.call self
-  self.errors.add(:current_password, current_password.blank? ? :blank :
-    :invalid)
-  false
-end
-
-result</code></pre>
-<p>end {% endhighlight %}</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="cf">def</span> update_with_password(params, <span class="kw">*</span>options)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    current_password <span class="kw">=</span> params<span class="at">.delete</span>(<span class="wa">:current_password</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    assign_and_check <span class="kw">=</span> <span class="fu">lambda</span> <span class="kw">{</span> <span class="kw">|</span>user<span class="kw">|</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      user<span class="at">.assign_attributes</span>(params, <span class="kw">*</span>options)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      user<span class="at">.valid?</span> <span class="kw">}</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    result <span class="cf">= if</span> params<span class="kw">[</span><span class="wa">:password</span><span class="kw">]</span><span class="at">.blank?</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      assign_and_check<span class="at">.call</span> <span class="dv">self</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      <span class="dv">self</span><span class="at">.errors.add</span>(<span class="wa">:password</span>, <span class="wa">:blank</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="dv">false</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elsif</span> authenticate(current_password)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>      update_attributes(params, <span class="kw">*</span>options)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>      assign_and_check<span class="at">.call</span> <span class="dv">self</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>      <span class="dv">self</span><span class="at">.errors.add</span>(<span class="wa">:current_password</span>, current_password<span class="at">.blank?</span> ? <span class="wa">:blank</span> :</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="wa">:invalid</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>      <span class="dv">false</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    result</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">end</span></span></code></pre></div>
 <p>My own doubtfulness in my implementation also made me <em>extra</em>
 careful with my tests, and to double-triple check I’ve asked a couple
 other folks to take a look at my implementation, as well as cross check
@@ -677,6 +758,7 @@ with Hartl’s guide. So far so good.</p>
 which is a must-read for keeping your app and your user data safe.</p>
 <p>The only sad part about all this learning is, I will never know if my
 system is good enough - there’s no testing like production.</p>
+</section>
 </article>
 </body>
 </html>
