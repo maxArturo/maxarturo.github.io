@@ -4,8 +4,78 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <meta name="author" content="Max A">
+  <meta name="dcterms.date" content="2016-10-21">
   <title>Install arbitrary node versions on Docker container via nvm</title>
   <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+background-color: #232629;
+color: #7a7c7d;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d; padding-left: 4px; }
+div.sourceCode
+{ color: #cfcfc2; background-color: #232629; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #cfcfc2; } 
+code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } 
+code span.an { color: #3f8058; } 
+code span.at { color: #2980b9; } 
+code span.bn { color: #f67400; } 
+code span.bu { color: #7f8c8d; } 
+code span.cf { color: #fdbc4b; font-weight: bold; } 
+code span.ch { color: #3daee9; } 
+code span.cn { color: #27aeae; font-weight: bold; } 
+code span.co { color: #7a7c7d; } 
+code span.cv { color: #7f8c8d; } 
+code span.do { color: #a43340; } 
+code span.dt { color: #2980b9; } 
+code span.dv { color: #f67400; } 
+code span.er { color: #da4453; text-decoration: underline; } 
+code span.ex { color: #0099ff; font-weight: bold; } 
+code span.fl { color: #f67400; } 
+code span.fu { color: #8e44ad; } 
+code span.im { color: #27ae60; } 
+code span.in { color: #c45b00; } 
+code span.kw { color: #cfcfc2; font-weight: bold; } 
+code span.op { color: #cfcfc2; } 
+code span.ot { color: #27ae60; } 
+code span.pp { color: #27ae60; } 
+code span.re { color: #2980b9; background-color: #153042; } 
+code span.sc { color: #3daee9; } 
+code span.ss { color: #da4453; } 
+code span.st { color: #f44f4f; } 
+code span.va { color: #27aeae; } 
+code span.vs { color: #da4453; } 
+code span.wa { color: #da4453; } 
+</style>
   <style type="text/css">.latex-sub, .latex-sup { text-transform: uppercase;
 font-size: smaller;
 position: relative; }
@@ -583,7 +653,9 @@ width: 100%;
 <header>
 <h1 class="title">Install arbitrary node versions on Docker container
 via nvm</h1>
+<p class="byline">2016-10-21 – Max A</p>
 </header>
+<section>
 <p>We’ve been using Docker to run our Node tests and encapsulate odd
 depencencies for a while now, and it’s worked out pretty well. We have a
 “baked-in” Node version via an official Node build, and add a couple of
@@ -598,13 +670,14 @@ the versions you’re targeting and configure the CI (Teamcity in this
 case) to watch for specific git branches, then use the appropriate
 Docker image. Another, hackier but more flexible solution is to select
 and use a Node version at <code>docker run</code>-time based on a
-<code>.nvmrc</code> file.</p>
-<p>“But wait!”, I hear you say. Doesn’t that mean that you’ll have an
-external dependency and you’ll install Node every time you run your
-tests?! I would look off into the horizon, and say, Sometimes we need to
-push the agenda forward. Sometimes we must do non-kosher, hacky things
-to keep the builds going. Especially when you have limited server
-control and build configs.</p>
+<code>.nvmrc</code> file <span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle"></input><span class="sidenote">“But wait!”, I hear you say. Doesn’t that mean that
+you’ll have an external dependency and you’ll install Node every time
+you run your tests?! I would look off into the horizon, and say,
+<em>Sometimes we need to push the agenda forward. Sometimes we must do
+non-kosher, hacky things to keep the builds going.</em> Especially when
+you have limited server control and build configs.<br />
+<br />
+</span></span>.</p>
 <p>The purpose of this post is not to defend the choice of installing
 Node every time we do <code>docker run</code> (its indefensible) nor to
 advocate that you should (you really shouldn’t), but rather to show a
@@ -612,48 +685,29 @@ way of running arbitrary Node versions on a Docker container, should you
 choose to do so. It’s actually not complicated - though there is some
 <code>ENV</code> juggling necessary, due to the nature of nvm.</p>
 <p>Here’s the heart of the matter:</p>
-<p>{% highlight docker %}</p>
-<section id="substituting-sh-for-bash-here-to-use-source.-beware---your-build-times-could-be" class="level1">
-<h1>Substituting sh for bash here to use <code>source</code>. Beware -
-your build times could be</h1>
-</section>
-<section id="longer-if-you-are-doing-shell-intensive-tasks" class="level1">
-<h1>longer if you are doing shell-intensive tasks!</h1>
-<p>RUN rm /bin/sh &amp;&amp; ln -s /bin/bash /bin/sh</p>
-</section>
-<section id="any-necessary-setup-steps-here" class="level1">
-<h1>any necessary setup steps here…</h1>
-</section>
-<section id="were-just-setting-it-to-the-root-users-home-root-is-default-on-docker" class="level1">
-<h1>We’re just setting it to the root user’s home (root is default on
-docker)</h1>
-</section>
-<section id="though-you-could-set-it-to-your-users-home-if-you-need-a-non-root-user" class="level1">
-<h1>though you could set it to your’ user’s home if you need a non-root
-user</h1>
-<p>ENV NVM_DIR=/root/.nvm</p>
-</section>
-<section id="install-nvm-on-the-home-dir-above" class="level1">
-<h1>install nvm on the home dir above</h1>
-<p>RUN wget -qO-
-https://raw.githubusercontent.com/creationix/nvm/master/install.sh |
-bash</p>
-</section>
-<section id="make-a-folder-for-the-app-why-not" class="level1">
-<h1>make a folder for the app, why not</h1>
-<p>RUN mkdir -p /usr/src/app WORKDIR /usr/src/app</p>
-</section>
-<section id="rely-on-projects-.nvmrc-file-to-install-the-appropriate-version-and-run-tests" class="level1">
-<h1>rely on project’s .nvmrc file to install the appropriate version and
-run tests</h1>
-<p>CMD source ~/.nvm/nvm.sh &amp;&amp; cd /usr/src/app &amp;&amp; nvm
-install &amp;&amp; npm i &amp;&amp; npm test</p>
-<p>{% endhighlight %}</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Substituting sh for bash here to use `source`. Beware - your build times could be</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># longer if you are doing shell-intensive tasks!</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">rm</span> /bin/sh <span class="kw">&amp;&amp;</span> <span class="fu">ln</span> <span class="at">-s</span> /bin/bash /bin/sh</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># any necessary setup steps here...</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># We&#39;re just setting it to the root user&#39;s home (root is default on docker)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># though you could set it to your&#39; user&#39;s home if you need a non-root user</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">ENV</span> NVM_DIR=/root/.nvm</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># install nvm on the home dir above</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">wget</span> <span class="at">-qO-</span> https://raw.githubusercontent.com/creationix/nvm/master/install.sh <span class="kw">|</span> <span class="fu">bash</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># make a folder for the app, why not</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">mkdir</span> <span class="at">-p</span> /usr/src/app</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="kw">WORKDIR</span> /usr/src/app</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># rely on project&#39;s .nvmrc file to install the appropriate version and run tests</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> <span class="bu">source</span> ~/.nvm/nvm.sh <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> /usr/src/app <span class="kw">&amp;&amp;</span> <span class="ex">nvm</span> install <span class="kw">&amp;&amp;</span> <span class="ex">npm</span> i <span class="kw">&amp;&amp;</span> <span class="ex">npm</span> test</span></code></pre></div>
 <p>Of interest are really these two parts:</p>
-<p>{% highlight docker %} RUN rm /bin/sh &amp;&amp; ln -s /bin/bash
-/bin/sh #… CMD source ~/.nvm/nvm.sh &amp;&amp; cd /usr/src/app
-&amp;&amp; nvm install &amp;&amp; npm i &amp;&amp; npm test {%
-endhighlight %}</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="fu">rm</span> /bin/sh <span class="kw">&amp;&amp;</span> <span class="fu">ln</span> <span class="at">-s</span> /bin/bash /bin/sh</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#...</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> <span class="bu">source</span> ~/.nvm/nvm.sh <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> /usr/src/app <span class="kw">&amp;&amp;</span> <span class="ex">nvm</span> install <span class="kw">&amp;&amp;</span> <span class="ex">npm</span> i <span class="kw">&amp;&amp;</span> <span class="ex">npm</span> test</span></code></pre></div>
 <p>The first subs <code>sh</code> for <code>bash</code>, allowing us to
 <code>source</code> files for running subsequent commands. The second
 activates <code>nvm</code> and installs a given node version, followed

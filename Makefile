@@ -6,7 +6,7 @@ STYLES :=  $(wildcard css/*.css)
 TARGETS := $(patsubst $(SRC_DIR)%, $(OUTPUT_DIR)%, $(SOURCES:.md=.html))
 
 .PHONY: all
-all: clean $(TARGETS)
+all: clean site/index.md $(TARGETS)
 
 # Debugging target
 debug:
@@ -32,4 +32,7 @@ $(OUTPUT_DIR)/%.html: $(SRC_DIR)/%.md
 
 .PHONY: clean
 clean:
-	rm -f $(TARGETS)
+	rm -f $(TARGETS) site/index.md
+
+site/index.md:
+	./make-index.sh
