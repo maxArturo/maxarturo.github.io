@@ -1,36 +1,33 @@
 # [my humble Web Site](https://maxalcala.com)
 
 > *say why are you building yet another static site generator?*
-> 
-> everyone 
+>
+> everyone
 
-This is my blog. It's built in Common Lisp, chosen primarily as a statement of not wanting to touch yet another build/compiler libary and/or having to relearn some other abstraction on top of a simple static site generator. It relies heavily on [spinneret](https://github.com/ruricolist/spinneret) to generate the actual HTML and cl-markdown as a side dependency to make my life easier. Markdown isn't handled quite well, but that's a future bug to chase. 
+This is my blog. It's gone through yet another refactor, whittling it down to its barest essence. This involves removing most executable code and reverting to the bedrock foundation of hypertext documents, [pandoc](https://pandoc.org/).
 
-Other than that, it's just eval/print all the way down.
+I've leaned heavily on [tufte-pandoc-css](https://github.com/jez/tufte-pandoc-css/tree/master), fixing the `makefile` and making sure that all the produced `html` was self-contained via `pandoc`.
+
+Other than that, it's just a `makefile` all the way down.
 
 ## what does what
-- spinneret takes care of turning s-exprs into HTML5
-- cl-markdown lets me write in md (vs everything being a lisp string)
-- cl-interpol lets me do both of the above in a sane manner, as well as exposing the full power of lisp within markdown (!). Consider: 
 
-```lisp
-(let* ((some-whacky-val (perform-a-computation)
-(post (:title "wacky title"
-  :sub-title "heyoo"
-  :date "2095 Jan 99"
-  :kind :post
-  :text #?|
+- [`tufte-css`](https://edwardtufte.github.io/tufte-css/) provides a simple, concise layout
+- `tufte-pandoc-css` adds flexible sidenotes and markdown ease-of-use
+- `pandoc` integrates all the css and renders static bundled HTML
 
-  ## lookie here! Markdown!
+Pandoc metadata provides the wiring for article and other post data, e.g.
 
-  and my wacky value is: ${some-whacky-val}, tada!
-
-|)))
+```text
+---
+title: A Sample Title
+subtitle: Sampling it
+date: 2019 Aug 13
+author: Max A
+---
 
 ```
 
-The above just needs to get `eval`'d in a context where `perform-a-computation` is syntactically valid, and voila. 
+## Usage
 
-The `#?|` syntax is courtesy of `cl-interpol`. The remainder is just writing your styles and file reading/writing. I must say I'm very happy with the output.
-
-
+`make` will `rm` and then create HTML files in the `docs` folder, ready for serving by GH pages. Check out the `makefile` for more details.

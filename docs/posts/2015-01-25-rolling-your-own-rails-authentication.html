@@ -4,78 +4,8 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <meta name="author" content="Jake Zimmerman">
-  <meta name="dcterms.date" content="2016-11-03">
-  <title>Tufte Pandoc CSS</title>
+  <title>Rolling your own Rails Authentication</title>
   <style type="text/css">code{white-space: pre;}</style>
-  <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-{ counter-reset: source-line 0; }
-pre.numberSource code > span
-{ position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-{ content: counter(source-line);
-position: relative; left: -1em; text-align: right; vertical-align: baseline;
-border: none; display: inline-block;
--webkit-touch-callout: none; -webkit-user-select: none;
--khtml-user-select: none; -moz-user-select: none;
--ms-user-select: none; user-select: none;
-padding: 0 4px; width: 4em;
-background-color: #232629;
-color: #7a7c7d;
-}
-pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d; padding-left: 4px; }
-div.sourceCode
-{ color: #cfcfc2; background-color: #232629; }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span { color: #cfcfc2; } 
-code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } 
-code span.an { color: #3f8058; } 
-code span.at { color: #2980b9; } 
-code span.bn { color: #f67400; } 
-code span.bu { color: #7f8c8d; } 
-code span.cf { color: #fdbc4b; font-weight: bold; } 
-code span.ch { color: #3daee9; } 
-code span.cn { color: #27aeae; font-weight: bold; } 
-code span.co { color: #7a7c7d; } 
-code span.cv { color: #7f8c8d; } 
-code span.do { color: #a43340; } 
-code span.dt { color: #2980b9; } 
-code span.dv { color: #f67400; } 
-code span.er { color: #da4453; text-decoration: underline; } 
-code span.ex { color: #0099ff; font-weight: bold; } 
-code span.fl { color: #f67400; } 
-code span.fu { color: #8e44ad; } 
-code span.im { color: #27ae60; } 
-code span.in { color: #c45b00; } 
-code span.kw { color: #cfcfc2; font-weight: bold; } 
-code span.op { color: #cfcfc2; } 
-code span.ot { color: #27ae60; } 
-code span.pp { color: #27ae60; } 
-code span.re { color: #2980b9; background-color: #153042; } 
-code span.sc { color: #3daee9; } 
-code span.ss { color: #da4453; } 
-code span.st { color: #f44f4f; } 
-code span.va { color: #27aeae; } 
-code span.vs { color: #da4453; } 
-code span.wa { color: #da4453; } 
-</style>
   <style type="text/css">.latex-sub, .latex-sup { text-transform: uppercase;
 font-size: smaller;
 position: relative; }
@@ -651,175 +581,102 @@ width: 100%;
 <body>
 <article>
 <header>
-<h1 class="title">Tufte Pandoc CSS</h1>
-<p class="subtitle">Starter files for Pandoc Markdown with Tufte CSS</p>
-<p class="byline">November 3, 2016 – Jake Zimmerman</p>
+<h1 class="title">Rolling your own Rails Authentication</h1>
 </header>
-<section>
-<p>Tufte Pandoc CSS is an attempt to make it as easy as possible to get
-started using <a href="https://edwardtufte.github.io/tufte-css/">Tufte
-CSS</a><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle"></input><span class="marginnote">If you’ve never heard of Tufte CSS before, take a
-second to check it out!<br />
-<br />
-</span></span> to write content. It does this by leveraging Pandoc
-Markdown’s existing features, along with a few new ones implemented as a
-<a href="http://pandoc.org/scripting.html#json-filters">JSON
-filter</a>.</p>
-</section>
-<section id="sidenotes-in-markdown" class="level2">
-<h2>Sidenotes in Markdown</h2>
-<div class="epigraph">
-<blockquote>
-<p>Tufte CSS provides tools to style web articles using the ideas
-demonstrated by Edward Tufte’s books and handouts. Tufte’s style is
-known for its simplicity, extensive use of sidenotes, tight integration
-of graphics with text, and carefully chosen typography.</p>
-<footer>
-Dave Liepmann, <a href="https://edwardtufte.github.io/tufte-css/">Tufte
-CSS</a>
-</footer>
-</blockquote>
-</div>
-<p>Tufte Pandoc CSS aims to be a set of <em>starter files</em> for your
-next project. What that means is that it provides a number of CSS files,
-a Pandoc template, a Makefile, and more to make it as easy as possible
-to write Markdown using Tufte CSS.</p>
-<p>The biggest barrier that this project overcomes is that Pandoc
-Markdown doesn’t support side notes nor margin notes by default. This
-project adds that functionality.<span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"></input><span class="sidenote">In particular, a separate library called <a href="https://github.com/jez/pandoc-sidenote"><code>pandoc-sidenote</code></a>
-handles the transformation of footnotes into sidenotes.<br />
-<br />
-</span></span> Here’s how you can use them:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>... In print, Tufte has used the proprietary Monotype</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Bembo<span class="ot">[^note]</span> font. ...</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ot">[^note]</span>:</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  See Tufte&#39;s comment in the Tufte book fonts thread.</span></code></pre></div>
-<p>By default, if you use the normal Pandoc syntax for creating
-footnotes, they’ll become Tufte CSS-style side notes. To get margin
-notes (i.e., side notes without numbers), just include <code>{-}</code>
-at the beginning of the note:</p>
-<figure class="fullwidth">
-<div class="sourceCode" id="cb2"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>... If you want a sidenote without footnote-style numberings, then you want a</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>margin note.<span class="ot">[^mn]</span> On large screens, ...</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ot">[^mn]</span>:</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  {-} This is a margin note. Notice there isn&#39;t a number preceding the note.</span></code></pre></div>
-</figure>
-</section>
-<section id="syntax-highlighted-codeblocks" class="level2">
-<h2>Syntax-Highlighted Codeblocks</h2>
-<p>Pandoc Markdown is excellent for styling code blocks. Indeed, you’ve
-already seen their effect in this document. You can use any of the
-methods for creating syntax highlighted code blocks Pandoc permits. For
-example:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute elements of the mandelbrot set</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mandelbrot(a):</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">reduce</span>(<span class="kw">lambda</span> z, _: z <span class="op">*</span> z <span class="op">+</span> a, <span class="bu">range</span>(<span class="dv">50</span>), <span class="dv">0</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> step(start, step, iterations):</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (start <span class="op">+</span> (i <span class="op">*</span> step) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(iterations))</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> ((<span class="st">&quot;*&quot;</span> <span class="cf">if</span> <span class="bu">abs</span>(mandelbrot(<span class="bu">complex</span>(x, y))) <span class="op">&lt;</span> <span class="dv">2</span> <span class="cf">else</span> <span class="st">&quot; &quot;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> x <span class="kw">in</span> step(<span class="op">-</span><span class="fl">2.0</span>, <span class="fl">.0315</span>, <span class="dv">80</span>))</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> y <span class="kw">in</span> step(<span class="dv">1</span>, <span class="op">-</span><span class="fl">.05</span>, <span class="dv">41</span>))</span></code></pre></div>
-<p>In this document, you’re also seeing the effect of the Solarized
-color scheme. You can use any of the color schemes Pandoc ships with by
-default, or this one.</p>
-<p>Another feature Pandoc allows that Tufte Pandoc CSS supports is
-generating line numbers to accompany a code sample:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a>merge []         ys                   <span class="ot">=</span> ys</span>
-<span id="cb4-2"><a href="#cb4-2"></a>merge xs         []                   <span class="ot">=</span> xs</span>
-<span id="cb4-3"><a href="#cb4-3"></a>merge xs<span class="op">@</span>(x<span class="op">:</span>xt) ys<span class="op">@</span>(y<span class="op">:</span>yt) <span class="op">|</span> x <span class="op">&lt;=</span> y    <span class="ot">=</span> x <span class="op">:</span> merge xt ys</span>
-<span id="cb4-4"><a href="#cb4-4"></a>                          <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> y <span class="op">:</span> merge xs yt</span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a>split (x<span class="op">:</span>y<span class="op">:</span>zs) <span class="ot">=</span> <span class="kw">let</span> (xs,ys) <span class="ot">=</span> split zs <span class="kw">in</span> (x<span class="op">:</span>xs,y<span class="op">:</span>ys)</span>
-<span id="cb4-7"><a href="#cb4-7"></a>split [x]      <span class="ot">=</span> ([x],[])</span>
-<span id="cb4-8"><a href="#cb4-8"></a>split []       <span class="ot">=</span> ([],[])</span>
-<span id="cb4-9"><a href="#cb4-9"></a></span>
-<span id="cb4-10"><a href="#cb4-10"></a>mergeSort []  <span class="ot">=</span> []</span>
-<span id="cb4-11"><a href="#cb4-11"></a>mergeSort [x] <span class="ot">=</span> [x]</span>
-<span id="cb4-12"><a href="#cb4-12"></a>mergeSort xs  <span class="ot">=</span> <span class="kw">let</span> (as,bs) <span class="ot">=</span> split xs</span>
-<span id="cb4-13"><a href="#cb4-13"></a>                <span class="kw">in</span> merge (mergeSort as) (mergeSort bs)</span></code></pre></div>
-</section>
-<section id="figures-sections" class="level2">
-<h2>Figures &amp; Sections</h2>
-<p>Unfortunately, HTML figures and sections don’t have special Markdown
-syntax. To include them in your document, you’ll have to use the raw
-HTML. On the bright side, this usually ends up being pretty
-painless.</p>
-<p>In particular for sections, if you’re satisfied with the top-most
-headings being wrapped in <code>&lt;section&gt;</code> tags, you can use
-the <code>--section-divs</code> flag to <code>pandoc</code> to
-automatically wrap sections in divs. This is already enabled in the
-Makefile we ship with this project. Regardless, if you have any leading
-text before your first heading, you will need to wrap this text in a
-<code>&lt;section&gt;</code> tag.</p>
-<p>Tufte Pandoc CSS improves support for full-width tables and code
-blocks. Special attention has been given to ensure that they’re fully
-responsive at all viewports, just like normal full-width figures. Here’s
-a sample full-width table:</p>
-<figure class="fullwidth">
-<table>
-<colgroup>
-<col style="width: 26%" />
-<col style="width: 46%" />
-<col style="width: 26%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Talk</th>
-<th>Speaker</th>
-<th>Time</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>HTML/CSS Primer</td>
-<td>Scott Krulcik</td>
-<td>1:30 p.m. – 3:00 p.m.</td>
-</tr>
-<tr class="even">
-<td>JavaScript Primer</td>
-<td>Jake Zimmerman</td>
-<td>3:00 p.m. – 4:30 p.m.</td>
-</tr>
-<tr class="odd">
-<td>UX Prototyping with Framer.js</td>
-<td>Lois Yang</td>
-<td>4:30 p.m. – 6:00 p.m.</td>
-</tr>
-<tr class="even">
-<td>Frontend Development with Angular.js</td>
-<td>Sandra Sajeev</td>
-<td>6:30 p.m. – 8:00 p.m.</td>
-</tr>
-</tbody>
-</table>
-</figure>
-<p>As one last quick note: the original Tufte CSS recommends that you
-always wrap images in <code>&lt;figure&gt;</code> tags for optimal
-responsiveness and layout. Depending on your tastes, you
-<strong>can</strong> choose to omit this. The differences will only take
-effect on mobile, where the width of the image will be slightly
-different from what it would be if it were properly wrapped. Try it both
-ways and see whether you value the convenience of no wrapping or the
-proper layout that a <code>&lt;figure&gt;</code> provides.</p>
-</section>
-<section id="installation-usage" class="level2">
-<h2>Installation &amp; Usage</h2>
-<p>As mentioned above, Tufte Pandoc CSS is designed to be a collection
-of starter files to help you with your next Markdown project. You can
-learn what files and tools are available on the <a href="https://github.com/jez/tufte-pandoc-css">GitHub
-repository</a>.</p>
-<p>As for usage, you are strongly encouraged to look at the <a href="https://raw.githubusercontent.com/jez/tufte-pandoc-css/master/docs/index.md">source
-of this document</a>. There’s also an HTML-to-Markdown port of <a href="tufte-md/">the original Tufte CSS page</a> along with the
-accompanying <a href="https://raw.githubusercontent.com/jez/tufte-pandoc-css/master/docs/tufte-md/index.md">source</a>.</p>
-<p>One goal of this project is to support as many of the features you’d
-“expect” to work that are available in Pandoc. If your favorite feature
-doesn’t work, let us know <a href="https://github.com/jez/tufte-pandoc-css/issues">with an
-issue</a>.</p>
-</section>
+<p>When I started learning Rails, my assumption is that most everything
+would be prepackaged and built-up, or rather prepackaged in cute little
+gems. I fell into one of Rail’s <a href="http://david.heinemeierhansson.com/posts/33-myth-4-rails-is-a-monolith">myths</a>
+- as it turns out, rails is extremely flexible and it lets you cut out
+whatever sections you wouldn’t want.</p>
+<p>I was telling a friend of mine that I planned to roll my own
+authentication, and while he didn’t dissuade me, he did tell me I would
+be better off taking something like Devise or oAuth and just ‘using the
+gem’. Inherently I thought he was right, but I still wanted to figure
+out just how difficult it was.</p>
+<p>Doing this seems pretty daunting, especially for someone who is just
+starting out: not just because security is a sensitive topic and it
+would be disastrous to get it wrong, but also because it sounds
+<em>hard</em> to just roll it up from scratch. However, it is completely
+doable with Rails - the components are exposed to you, so that you don’t
+neccesarily have to go down to the metal if you want to implement your
+own solutions.</p>
+<p>While researching this I found most SO posts will redirect you to a
+gem, which in all honesty is the best way to go if you’re trying to
+crank out an app and just want the functionality to work.
+<strong>But</strong>, if you’re learning and want that challenge, it
+turns out that there’s a fantastic resource. Michael Hart’ls <a href="https://www.railstutorial.org/book/sign_up">intro to Rails</a>
+includes a gentle, but thorough guide on how to set up your own
+authentication and session management in Rails.</p>
+<p>It all starts out with <a href="http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html">has_secure_password</a>,
+which includes suite of validations and authentications needed to save a
+password digest. It’s easy to use and well-documented. It uses an
+implementation of BCrypt, which is a hashing algorithm that secures your
+passwords and sensitive data should your database fall in the wrong
+hands. It is the same secure algorithm <a href="https://help.github.com/articles/github-security/#maintaining-security">used
+by github</a>, so I figured it would be good enough for me. For more
+details on BCrypt, see the amusing explanation by <a href="http://yorickpeterse.com/articles/use-bcrypt-fool/">Yorick
+Peterse</a>.</p>
+<p>We can use the same code used by BCrypt in the Rails implementation
+(via <code>has_secure_password</code>) to generate our digests and save
+them to our models:</p>
+<p>{% highlight ruby %} def User.digest(input_string) cost =
+ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+BCrypt::Engine.cost BCrypt::Password.create(input_string, cost: cost)
+end {% endhighlight %}</p>
+<p>After that, all it takes is a comparison (also extracted from the
+Rails BCrypt implementation) to compare your token against a hash:</p>
+<p>{% highlight ruby %} BCrypt::Password.new(digest).is_password?(token)
+{% endhighlight %}</p>
+<p>Throw those into your User model and you can start authenticating
+passwords!</p>
+<p>Another key ingredient that prevents us from rewriting an entire
+cookie handling library is the <code>session</code> and
+<code>cookies</code> <a href="http://api.rubyonrails.org/classes/ActionDispatch/Cookies.html">object</a>.
+We can write directly into the browser’s session or cookies by just
+<strong>calling</strong> them. Take a second to reflect on how awesome
+that is, and you can start seeing how its <em>completely</em> feasible
+to write your own logic flow for logins and logouts.</p>
+<p>Throughout this excercise, I also ran against the crux of the MVC
+paradigm: where should it all live? I was particularly stumped by a now
+obiquitious requirement: checking the current password of my user in
+order to let them change it in the first place. It was straightforward
+enough to actually make the change, but where should the verification
+code live? The controller seems to be able to manage that, but at the
+same time the model could contain the logic (and even I know this
+shouldn’t go in the view). Some people might even propose an Angular
+solution. I ultimatley opted to place it in the Model, as all my
+validation logic would be in one cohesive location and it would flow
+well with <code>update_attributes</code> (some people will see some
+similarity with the code from a popular auth gem):</p>
+<p>{% highlight ruby %} def update_with_password(params, *options)
+current_password = params.delete(:current_password)</p>
+<pre><code>assign_and_check = lambda { |user|
+  user.assign_attributes(params, *options)
+  user.valid? }
+
+result = if params[:password].blank?
+  assign_and_check.call self
+  self.errors.add(:password, :blank)
+  false
+elsif authenticate(current_password)
+  update_attributes(params, *options)
+else
+  assign_and_check.call self
+  self.errors.add(:current_password, current_password.blank? ? :blank :
+    :invalid)
+  false
+end
+
+result</code></pre>
+<p>end {% endhighlight %}</p>
+<p>My own doubtfulness in my implementation also made me <em>extra</em>
+careful with my tests, and to double-triple check I’ve asked a couple
+other folks to take a look at my implementation, as well as cross check
+with Hartl’s guide. So far so good.</p>
+<p>With all said and done, there’s one last shout-out to the Rails <a href="http://guides.rubyonrails.org/security.html">security guide</a>,
+which is a must-read for keeping your app and your user data safe.</p>
+<p>The only sad part about all this learning is, I will never know if my
+system is good enough - there’s no testing like production.</p>
 </article>
 </body>
 </html>

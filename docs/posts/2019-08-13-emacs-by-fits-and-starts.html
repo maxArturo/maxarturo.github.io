@@ -4,9 +4,8 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <meta name="author" content="Jake Zimmerman">
-  <meta name="dcterms.date" content="2016-11-03">
-  <title>Tufte Pandoc CSS</title>
+  <meta name="author" content="Max A">
+  <title>Emacs, by fits and starts</title>
   <style type="text/css">code{white-space: pre;}</style>
   <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
@@ -651,174 +650,73 @@ width: 100%;
 <body>
 <article>
 <header>
-<h1 class="title">Tufte Pandoc CSS</h1>
-<p class="subtitle">Starter files for Pandoc Markdown with Tufte CSS</p>
-<p class="byline">November 3, 2016 – Jake Zimmerman</p>
+<h1 class="title">Emacs, by fits and starts</h1>
+<p class="byline">2019 Aug 13 – Max A</p>
 </header>
 <section>
-<p>Tufte Pandoc CSS is an attempt to make it as easy as possible to get
-started using <a href="https://edwardtufte.github.io/tufte-css/">Tufte
-CSS</a><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle"></input><span class="marginnote">If you’ve never heard of Tufte CSS before, take a
-second to check it out!<br />
-<br />
-</span></span> to write content. It does this by leveraging Pandoc
-Markdown’s existing features, along with a few new ones implemented as a
-<a href="http://pandoc.org/scripting.html#json-filters">JSON
-filter</a>.</p>
-</section>
-<section id="sidenotes-in-markdown" class="level2">
-<h2>Sidenotes in Markdown</h2>
-<div class="epigraph">
-<blockquote>
-<p>Tufte CSS provides tools to style web articles using the ideas
-demonstrated by Edward Tufte’s books and handouts. Tufte’s style is
-known for its simplicity, extensive use of sidenotes, tight integration
-of graphics with text, and carefully chosen typography.</p>
-<footer>
-Dave Liepmann, <a href="https://edwardtufte.github.io/tufte-css/">Tufte
-CSS</a>
-</footer>
-</blockquote>
-</div>
-<p>Tufte Pandoc CSS aims to be a set of <em>starter files</em> for your
-next project. What that means is that it provides a number of CSS files,
-a Pandoc template, a Makefile, and more to make it as easy as possible
-to write Markdown using Tufte CSS.</p>
-<p>The biggest barrier that this project overcomes is that Pandoc
-Markdown doesn’t support side notes nor margin notes by default. This
-project adds that functionality.<span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"></input><span class="sidenote">In particular, a separate library called <a href="https://github.com/jez/pandoc-sidenote"><code>pandoc-sidenote</code></a>
-handles the transformation of footnotes into sidenotes.<br />
-<br />
-</span></span> Here’s how you can use them:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>... In print, Tufte has used the proprietary Monotype</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Bembo<span class="ot">[^note]</span> font. ...</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ot">[^note]</span>:</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  See Tufte&#39;s comment in the Tufte book fonts thread.</span></code></pre></div>
-<p>By default, if you use the normal Pandoc syntax for creating
-footnotes, they’ll become Tufte CSS-style side notes. To get margin
-notes (i.e., side notes without numbers), just include <code>{-}</code>
-at the beginning of the note:</p>
-<figure class="fullwidth">
-<div class="sourceCode" id="cb2"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>... If you want a sidenote without footnote-style numberings, then you want a</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>margin note.<span class="ot">[^mn]</span> On large screens, ...</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ot">[^mn]</span>:</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  {-} This is a margin note. Notice there isn&#39;t a number preceding the note.</span></code></pre></div>
-</figure>
-</section>
-<section id="syntax-highlighted-codeblocks" class="level2">
-<h2>Syntax-Highlighted Codeblocks</h2>
-<p>Pandoc Markdown is excellent for styling code blocks. Indeed, you’ve
-already seen their effect in this document. You can use any of the
-methods for creating syntax highlighted code blocks Pandoc permits. For
-example:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute elements of the mandelbrot set</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mandelbrot(a):</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">reduce</span>(<span class="kw">lambda</span> z, _: z <span class="op">*</span> z <span class="op">+</span> a, <span class="bu">range</span>(<span class="dv">50</span>), <span class="dv">0</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> step(start, step, iterations):</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (start <span class="op">+</span> (i <span class="op">*</span> step) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(iterations))</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> ((<span class="st">&quot;*&quot;</span> <span class="cf">if</span> <span class="bu">abs</span>(mandelbrot(<span class="bu">complex</span>(x, y))) <span class="op">&lt;</span> <span class="dv">2</span> <span class="cf">else</span> <span class="st">&quot; &quot;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> x <span class="kw">in</span> step(<span class="op">-</span><span class="fl">2.0</span>, <span class="fl">.0315</span>, <span class="dv">80</span>))</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> y <span class="kw">in</span> step(<span class="dv">1</span>, <span class="op">-</span><span class="fl">.05</span>, <span class="dv">41</span>))</span></code></pre></div>
-<p>In this document, you’re also seeing the effect of the Solarized
-color scheme. You can use any of the color schemes Pandoc ships with by
-default, or this one.</p>
-<p>Another feature Pandoc allows that Tufte Pandoc CSS supports is
-generating line numbers to accompany a code sample:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a>merge []         ys                   <span class="ot">=</span> ys</span>
-<span id="cb4-2"><a href="#cb4-2"></a>merge xs         []                   <span class="ot">=</span> xs</span>
-<span id="cb4-3"><a href="#cb4-3"></a>merge xs<span class="op">@</span>(x<span class="op">:</span>xt) ys<span class="op">@</span>(y<span class="op">:</span>yt) <span class="op">|</span> x <span class="op">&lt;=</span> y    <span class="ot">=</span> x <span class="op">:</span> merge xt ys</span>
-<span id="cb4-4"><a href="#cb4-4"></a>                          <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> y <span class="op">:</span> merge xs yt</span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a>split (x<span class="op">:</span>y<span class="op">:</span>zs) <span class="ot">=</span> <span class="kw">let</span> (xs,ys) <span class="ot">=</span> split zs <span class="kw">in</span> (x<span class="op">:</span>xs,y<span class="op">:</span>ys)</span>
-<span id="cb4-7"><a href="#cb4-7"></a>split [x]      <span class="ot">=</span> ([x],[])</span>
-<span id="cb4-8"><a href="#cb4-8"></a>split []       <span class="ot">=</span> ([],[])</span>
-<span id="cb4-9"><a href="#cb4-9"></a></span>
-<span id="cb4-10"><a href="#cb4-10"></a>mergeSort []  <span class="ot">=</span> []</span>
-<span id="cb4-11"><a href="#cb4-11"></a>mergeSort [x] <span class="ot">=</span> [x]</span>
-<span id="cb4-12"><a href="#cb4-12"></a>mergeSort xs  <span class="ot">=</span> <span class="kw">let</span> (as,bs) <span class="ot">=</span> split xs</span>
-<span id="cb4-13"><a href="#cb4-13"></a>                <span class="kw">in</span> merge (mergeSort as) (mergeSort bs)</span></code></pre></div>
-</section>
-<section id="figures-sections" class="level2">
-<h2>Figures &amp; Sections</h2>
-<p>Unfortunately, HTML figures and sections don’t have special Markdown
-syntax. To include them in your document, you’ll have to use the raw
-HTML. On the bright side, this usually ends up being pretty
-painless.</p>
-<p>In particular for sections, if you’re satisfied with the top-most
-headings being wrapped in <code>&lt;section&gt;</code> tags, you can use
-the <code>--section-divs</code> flag to <code>pandoc</code> to
-automatically wrap sections in divs. This is already enabled in the
-Makefile we ship with this project. Regardless, if you have any leading
-text before your first heading, you will need to wrap this text in a
-<code>&lt;section&gt;</code> tag.</p>
-<p>Tufte Pandoc CSS improves support for full-width tables and code
-blocks. Special attention has been given to ensure that they’re fully
-responsive at all viewports, just like normal full-width figures. Here’s
-a sample full-width table:</p>
-<figure class="fullwidth">
-<table>
-<colgroup>
-<col style="width: 26%" />
-<col style="width: 46%" />
-<col style="width: 26%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Talk</th>
-<th>Speaker</th>
-<th>Time</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>HTML/CSS Primer</td>
-<td>Scott Krulcik</td>
-<td>1:30 p.m. – 3:00 p.m.</td>
-</tr>
-<tr class="even">
-<td>JavaScript Primer</td>
-<td>Jake Zimmerman</td>
-<td>3:00 p.m. – 4:30 p.m.</td>
-</tr>
-<tr class="odd">
-<td>UX Prototyping with Framer.js</td>
-<td>Lois Yang</td>
-<td>4:30 p.m. – 6:00 p.m.</td>
-</tr>
-<tr class="even">
-<td>Frontend Development with Angular.js</td>
-<td>Sandra Sajeev</td>
-<td>6:30 p.m. – 8:00 p.m.</td>
-</tr>
-</tbody>
-</table>
-</figure>
-<p>As one last quick note: the original Tufte CSS recommends that you
-always wrap images in <code>&lt;figure&gt;</code> tags for optimal
-responsiveness and layout. Depending on your tastes, you
-<strong>can</strong> choose to omit this. The differences will only take
-effect on mobile, where the width of the image will be slightly
-different from what it would be if it were properly wrapped. Try it both
-ways and see whether you value the convenience of no wrapping or the
-proper layout that a <code>&lt;figure&gt;</code> provides.</p>
-</section>
-<section id="installation-usage" class="level2">
-<h2>Installation &amp; Usage</h2>
-<p>As mentioned above, Tufte Pandoc CSS is designed to be a collection
-of starter files to help you with your next Markdown project. You can
-learn what files and tools are available on the <a href="https://github.com/jez/tufte-pandoc-css">GitHub
-repository</a>.</p>
-<p>As for usage, you are strongly encouraged to look at the <a href="https://raw.githubusercontent.com/jez/tufte-pandoc-css/master/docs/index.md">source
-of this document</a>. There’s also an HTML-to-Markdown port of <a href="tufte-md/">the original Tufte CSS page</a> along with the
-accompanying <a href="https://raw.githubusercontent.com/jez/tufte-pandoc-css/master/docs/tufte-md/index.md">source</a>.</p>
-<p>One goal of this project is to support as many of the features you’d
-“expect” to work that are available in Pandoc. If your favorite feature
-doesn’t work, let us know <a href="https://github.com/jez/tufte-pandoc-css/issues">with an
-issue</a>.</p>
+<p>I think this is a ritual that most Vim users will understand. At some
+point in your Vim journey, one peeks over the “dark side” and sees what
+the emacs crowd have to offer. I’ve looked at emacs a handful of times
+over the years - academically only, mind you - and several times came to
+the same conclusion: emacs users are crazy! Look at all those chords of
+commands! They make no sense!</p>
+<p>And yet, I kept seeing hints of its <em>true power</em> sprinkled
+around the web. Musings about an obscure <a href="https://orgmode.org/">org mode</a> that’s so powerful you could
+run a business with it (and <a href="https://bofh.org.uk/2019/02/25/baking-with-emacs/">some people
+do</a>), being able to draw, edit full functions, and other selling
+points made me dig around a little bit more. And as if destiny conspired
+to emacs me, I found a project called <a href="http://spacemacs.org/">spacemacs</a> that promised the best of
+both worlds: vim keybindings and access to the emacs ecosystem. I put
+aside 30 minutes and took the plunge.</p>
+<p>By my reckoning, it’s been about a month since. So now, you figure, I
+am an emacs monk who has been <a href="http://wiki.c2.com/?ZenSlap">hit
+over the head and attained enlightenment</a>? Not quite so. However, I
+did get a taste of the emacs universe and I gotta say, I was missing
+out.</p>
+<p>The venerable org mode is, in my opinion, a beautiful excess of
+features for hyper-organized people. However, its text-based simplicity
+is very powerful and I’ve come to rely on it heavily. I followed in the
+path of other <a href="https://meta.caspershire.net/spacemacs-and-org-mode/">fellow
+developers</a> who have jumped into org mode and I’ve found it an easy
+and pleasant experience - to the point that it’s swallowed up my entire
+productivity workflow. I mean, <a href="http://develop.spacemacs.org/layers/+emacs/org/README.html#pomodoro">pomodoro
+mode</a>? How cool is that!</p>
+<p>In no particular order, I find these features of most benefit:</p>
+<ul>
+<li>Folding of arbitrary sections of code. You can fold any text below a
+section (org mode calls it an outline) by hitting <code>tab</code>.</li>
+</ul>
+<p>Folded:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode org"><code class="sourceCode orgmode"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">* Personal...</span></span></code></pre></div>
+<p>Unfolded:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode org"><code class="sourceCode orgmode"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">* Personal</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">** Emacs...</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">** Kubernetes...</span></span></code></pre></div>
+<ul>
+<li>Tables</li>
+</ul>
+<p>Tables get auto-formatted and are very easy to type. You can also
+convert them into full-fledged spreadsheets by adding elisp functions
+inside of them, if you are so motivated.</p>
+<ul>
+<li>Deadlines, tags</li>
+</ul>
+<p>Yup. All text-based.</p>
+<ul>
+<li>Git</li>
+</ul>
+<p>Magit is one of the most sensible text-based git interfaces, and it’s
+just another layer in emacs. However, the UI is not super intuitive and
+some <a href="https://www.saltycrane.com/blog/2018/11/magit-spacemacs-evil-magit-notes/">additional
+help</a> is recommended to learn the ropes. Very much worth it.</p>
+<p>Now I don’t even think of it twice before opening a buffer and typing
+out emails, reviewing code, etc., all via spacemacs. Will I ever go
+“raw” emacs? Probably not. After taking a bite from the fruit of wisdom,
+I’ve concluded that vim key navigation is still vastly superior to the
+web of key chords needed to become productive in emacs. Much like
+Esperanto, I’m sure you can get by with it if you learn it from an
+earlier age. But at this point I unfortunately have devoted too much
+muscle memory to Vim and have painted myself into a corner.</p>
 </section>
 </article>
 </body>

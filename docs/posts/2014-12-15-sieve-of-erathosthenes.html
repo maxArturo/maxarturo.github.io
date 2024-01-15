@@ -4,78 +4,9 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <meta name="author" content="Jake Zimmerman">
-  <meta name="dcterms.date" content="2016-11-03">
-  <title>Tufte Pandoc CSS</title>
+  <meta name="author" content="Max A">
+  <title>Sieve of Eratosthenes</title>
   <style type="text/css">code{white-space: pre;}</style>
-  <style type="text/css">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-{ counter-reset: source-line 0; }
-pre.numberSource code > span
-{ position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-{ content: counter(source-line);
-position: relative; left: -1em; text-align: right; vertical-align: baseline;
-border: none; display: inline-block;
--webkit-touch-callout: none; -webkit-user-select: none;
--khtml-user-select: none; -moz-user-select: none;
--ms-user-select: none; user-select: none;
-padding: 0 4px; width: 4em;
-background-color: #232629;
-color: #7a7c7d;
-}
-pre.numberSource { margin-left: 3em; border-left: 1px solid #7a7c7d; padding-left: 4px; }
-div.sourceCode
-{ color: #cfcfc2; background-color: #232629; }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span { color: #cfcfc2; } 
-code span.al { color: #95da4c; background-color: #4d1f24; font-weight: bold; } 
-code span.an { color: #3f8058; } 
-code span.at { color: #2980b9; } 
-code span.bn { color: #f67400; } 
-code span.bu { color: #7f8c8d; } 
-code span.cf { color: #fdbc4b; font-weight: bold; } 
-code span.ch { color: #3daee9; } 
-code span.cn { color: #27aeae; font-weight: bold; } 
-code span.co { color: #7a7c7d; } 
-code span.cv { color: #7f8c8d; } 
-code span.do { color: #a43340; } 
-code span.dt { color: #2980b9; } 
-code span.dv { color: #f67400; } 
-code span.er { color: #da4453; text-decoration: underline; } 
-code span.ex { color: #0099ff; font-weight: bold; } 
-code span.fl { color: #f67400; } 
-code span.fu { color: #8e44ad; } 
-code span.im { color: #27ae60; } 
-code span.in { color: #c45b00; } 
-code span.kw { color: #cfcfc2; font-weight: bold; } 
-code span.op { color: #cfcfc2; } 
-code span.ot { color: #27ae60; } 
-code span.pp { color: #27ae60; } 
-code span.re { color: #2980b9; background-color: #153042; } 
-code span.sc { color: #3daee9; } 
-code span.ss { color: #da4453; } 
-code span.st { color: #f44f4f; } 
-code span.va { color: #27aeae; } 
-code span.vs { color: #da4453; } 
-code span.wa { color: #da4453; } 
-</style>
   <style type="text/css">.latex-sub, .latex-sup { text-transform: uppercase;
 font-size: smaller;
 position: relative; }
@@ -651,174 +582,51 @@ width: 100%;
 <body>
 <article>
 <header>
-<h1 class="title">Tufte Pandoc CSS</h1>
-<p class="subtitle">Starter files for Pandoc Markdown with Tufte CSS</p>
-<p class="byline">November 3, 2016 – Jake Zimmerman</p>
+<h1 class="title">Sieve of Eratosthenes</h1>
+<p class="byline">2014-12-02 09:36:03 -0600 – Max A</p>
 </header>
 <section>
-<p>Tufte Pandoc CSS is an attempt to make it as easy as possible to get
-started using <a href="https://edwardtufte.github.io/tufte-css/">Tufte
-CSS</a><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle">⊕</label><input type="checkbox" id="sn-0" class="margin-toggle"></input><span class="marginnote">If you’ve never heard of Tufte CSS before, take a
-second to check it out!<br />
+<p>There’s a lot of humility that goes with learning (or re-learning)
+topics in CS/Discrete math. I had one such instance a couple of days ago
+as I started reviewing my basic data structures and algorithms, and
+realized I remembered way less than I thought.</p>
+<p>Now mind you, it’s been roughly 4 years since I’ve taken an
+Algorithms course, and some people would say that its even worse to
+start out with no prior knowledge than with some vague notion. To those
+people, I’ll argue back that despite some truth to their claim, it’s
+nonetheless frustrating to stare back at a relatively simple algorithm
+<em>you knew you had down not too many years ago, it seems</em> and not
+really be able to grasp it.</p>
+<p>That just happened with me this weekend with Eratosthenes. The <a href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">wikipedia
+article</a> does a very thorough job of explaining what it does - find
+prime numbers iteratively -, but what I really wanted to understand was
+the reasons for optimizations (which is is just hand-waved away in the
+first page of google links). See, I have that need always to understand
+assumptions and abstractions - and it becomes an unhealthy obsession
+until I can solve it. It was not until I found <a href="https://en.wikibooks.org/wiki/Discrete_Mathematics/Sieve_of_Eratosthenes">this
+wikibooks page</a> that actually went into the property of composite
+numbers and the reason for starting at n^2 for sieving that I got that
+sweet <em>aaahhh</em> moment of understanding.</p>
+<!-- more -->
+<p>After that I coded up a reasonably fast <a href="https://github.com/maxArturo/programmerDaily/blob/master/unsorted/sieve_of_erathostenes.rb">implementation
+for ruby</a> and almost considered myself done. However, I did remain a
+bit frustrated by how long it took me to grasp the concept, and
+considered for a moment how I could both cement the knowledge and make
+something useful at the same time. Using the trusty old d3.js, I whipped
+up a <a href="http://bl.ocks.org/maxArturo/1e3abba3ddcc66017e99">visualization</a><span class="sidenote-wrapper"><label for="sn-0" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-0" class="margin-toggle"></input><span class="sidenote"><em>Editors note</em>. This resource, too, has fallen
+to code rot as of 2024. This particularly makes me sad since Mike
+Bostock’s leadership and work was very formative for my coding career.
+Now you just get a hardlink back to a gist - which I guess is good for a
+fallback, but I can’t help to feel that these neat little tools that
+were emblematic for the “show and tell” spirit of the open web are one
+by one falling by the wayside. The author will instead celebrate the
+fact that Mike seems to be doing great over at <a href="https://observablehq.com/plot/">Observable</a>.<br />
 <br />
-</span></span> to write content. It does this by leveraging Pandoc
-Markdown’s existing features, along with a few new ones implemented as a
-<a href="http://pandoc.org/scripting.html#json-filters">JSON
-filter</a>.</p>
-</section>
-<section id="sidenotes-in-markdown" class="level2">
-<h2>Sidenotes in Markdown</h2>
-<div class="epigraph">
-<blockquote>
-<p>Tufte CSS provides tools to style web articles using the ideas
-demonstrated by Edward Tufte’s books and handouts. Tufte’s style is
-known for its simplicity, extensive use of sidenotes, tight integration
-of graphics with text, and carefully chosen typography.</p>
-<footer>
-Dave Liepmann, <a href="https://edwardtufte.github.io/tufte-css/">Tufte
-CSS</a>
-</footer>
-</blockquote>
-</div>
-<p>Tufte Pandoc CSS aims to be a set of <em>starter files</em> for your
-next project. What that means is that it provides a number of CSS files,
-a Pandoc template, a Makefile, and more to make it as easy as possible
-to write Markdown using Tufte CSS.</p>
-<p>The biggest barrier that this project overcomes is that Pandoc
-Markdown doesn’t support side notes nor margin notes by default. This
-project adds that functionality.<span class="sidenote-wrapper"><label for="sn-1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-1" class="margin-toggle"></input><span class="sidenote">In particular, a separate library called <a href="https://github.com/jez/pandoc-sidenote"><code>pandoc-sidenote</code></a>
-handles the transformation of footnotes into sidenotes.<br />
-<br />
-</span></span> Here’s how you can use them:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>... In print, Tufte has used the proprietary Monotype</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Bembo<span class="ot">[^note]</span> font. ...</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ot">[^note]</span>:</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  See Tufte&#39;s comment in the Tufte book fonts thread.</span></code></pre></div>
-<p>By default, if you use the normal Pandoc syntax for creating
-footnotes, they’ll become Tufte CSS-style side notes. To get margin
-notes (i.e., side notes without numbers), just include <code>{-}</code>
-at the beginning of the note:</p>
-<figure class="fullwidth">
-<div class="sourceCode" id="cb2"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>... If you want a sidenote without footnote-style numberings, then you want a</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>margin note.<span class="ot">[^mn]</span> On large screens, ...</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ot">[^mn]</span>:</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  {-} This is a margin note. Notice there isn&#39;t a number preceding the note.</span></code></pre></div>
-</figure>
-</section>
-<section id="syntax-highlighted-codeblocks" class="level2">
-<h2>Syntax-Highlighted Codeblocks</h2>
-<p>Pandoc Markdown is excellent for styling code blocks. Indeed, you’ve
-already seen their effect in this document. You can use any of the
-methods for creating syntax highlighted code blocks Pandoc permits. For
-example:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute elements of the mandelbrot set</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mandelbrot(a):</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">reduce</span>(<span class="kw">lambda</span> z, _: z <span class="op">*</span> z <span class="op">+</span> a, <span class="bu">range</span>(<span class="dv">50</span>), <span class="dv">0</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> step(start, step, iterations):</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (start <span class="op">+</span> (i <span class="op">*</span> step) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(iterations))</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> ((<span class="st">&quot;*&quot;</span> <span class="cf">if</span> <span class="bu">abs</span>(mandelbrot(<span class="bu">complex</span>(x, y))) <span class="op">&lt;</span> <span class="dv">2</span> <span class="cf">else</span> <span class="st">&quot; &quot;</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> x <span class="kw">in</span> step(<span class="op">-</span><span class="fl">2.0</span>, <span class="fl">.0315</span>, <span class="dv">80</span>))</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> y <span class="kw">in</span> step(<span class="dv">1</span>, <span class="op">-</span><span class="fl">.05</span>, <span class="dv">41</span>))</span></code></pre></div>
-<p>In this document, you’re also seeing the effect of the Solarized
-color scheme. You can use any of the color schemes Pandoc ships with by
-default, or this one.</p>
-<p>Another feature Pandoc allows that Tufte Pandoc CSS supports is
-generating line numbers to accompany a code sample:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode numberSource haskell numberLines"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a>merge []         ys                   <span class="ot">=</span> ys</span>
-<span id="cb4-2"><a href="#cb4-2"></a>merge xs         []                   <span class="ot">=</span> xs</span>
-<span id="cb4-3"><a href="#cb4-3"></a>merge xs<span class="op">@</span>(x<span class="op">:</span>xt) ys<span class="op">@</span>(y<span class="op">:</span>yt) <span class="op">|</span> x <span class="op">&lt;=</span> y    <span class="ot">=</span> x <span class="op">:</span> merge xt ys</span>
-<span id="cb4-4"><a href="#cb4-4"></a>                          <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> y <span class="op">:</span> merge xs yt</span>
-<span id="cb4-5"><a href="#cb4-5"></a></span>
-<span id="cb4-6"><a href="#cb4-6"></a>split (x<span class="op">:</span>y<span class="op">:</span>zs) <span class="ot">=</span> <span class="kw">let</span> (xs,ys) <span class="ot">=</span> split zs <span class="kw">in</span> (x<span class="op">:</span>xs,y<span class="op">:</span>ys)</span>
-<span id="cb4-7"><a href="#cb4-7"></a>split [x]      <span class="ot">=</span> ([x],[])</span>
-<span id="cb4-8"><a href="#cb4-8"></a>split []       <span class="ot">=</span> ([],[])</span>
-<span id="cb4-9"><a href="#cb4-9"></a></span>
-<span id="cb4-10"><a href="#cb4-10"></a>mergeSort []  <span class="ot">=</span> []</span>
-<span id="cb4-11"><a href="#cb4-11"></a>mergeSort [x] <span class="ot">=</span> [x]</span>
-<span id="cb4-12"><a href="#cb4-12"></a>mergeSort xs  <span class="ot">=</span> <span class="kw">let</span> (as,bs) <span class="ot">=</span> split xs</span>
-<span id="cb4-13"><a href="#cb4-13"></a>                <span class="kw">in</span> merge (mergeSort as) (mergeSort bs)</span></code></pre></div>
-</section>
-<section id="figures-sections" class="level2">
-<h2>Figures &amp; Sections</h2>
-<p>Unfortunately, HTML figures and sections don’t have special Markdown
-syntax. To include them in your document, you’ll have to use the raw
-HTML. On the bright side, this usually ends up being pretty
-painless.</p>
-<p>In particular for sections, if you’re satisfied with the top-most
-headings being wrapped in <code>&lt;section&gt;</code> tags, you can use
-the <code>--section-divs</code> flag to <code>pandoc</code> to
-automatically wrap sections in divs. This is already enabled in the
-Makefile we ship with this project. Regardless, if you have any leading
-text before your first heading, you will need to wrap this text in a
-<code>&lt;section&gt;</code> tag.</p>
-<p>Tufte Pandoc CSS improves support for full-width tables and code
-blocks. Special attention has been given to ensure that they’re fully
-responsive at all viewports, just like normal full-width figures. Here’s
-a sample full-width table:</p>
-<figure class="fullwidth">
-<table>
-<colgroup>
-<col style="width: 26%" />
-<col style="width: 46%" />
-<col style="width: 26%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Talk</th>
-<th>Speaker</th>
-<th>Time</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>HTML/CSS Primer</td>
-<td>Scott Krulcik</td>
-<td>1:30 p.m. – 3:00 p.m.</td>
-</tr>
-<tr class="even">
-<td>JavaScript Primer</td>
-<td>Jake Zimmerman</td>
-<td>3:00 p.m. – 4:30 p.m.</td>
-</tr>
-<tr class="odd">
-<td>UX Prototyping with Framer.js</td>
-<td>Lois Yang</td>
-<td>4:30 p.m. – 6:00 p.m.</td>
-</tr>
-<tr class="even">
-<td>Frontend Development with Angular.js</td>
-<td>Sandra Sajeev</td>
-<td>6:30 p.m. – 8:00 p.m.</td>
-</tr>
-</tbody>
-</table>
-</figure>
-<p>As one last quick note: the original Tufte CSS recommends that you
-always wrap images in <code>&lt;figure&gt;</code> tags for optimal
-responsiveness and layout. Depending on your tastes, you
-<strong>can</strong> choose to omit this. The differences will only take
-effect on mobile, where the width of the image will be slightly
-different from what it would be if it were properly wrapped. Try it both
-ways and see whether you value the convenience of no wrapping or the
-proper layout that a <code>&lt;figure&gt;</code> provides.</p>
-</section>
-<section id="installation-usage" class="level2">
-<h2>Installation &amp; Usage</h2>
-<p>As mentioned above, Tufte Pandoc CSS is designed to be a collection
-of starter files to help you with your next Markdown project. You can
-learn what files and tools are available on the <a href="https://github.com/jez/tufte-pandoc-css">GitHub
-repository</a>.</p>
-<p>As for usage, you are strongly encouraged to look at the <a href="https://raw.githubusercontent.com/jez/tufte-pandoc-css/master/docs/index.md">source
-of this document</a>. There’s also an HTML-to-Markdown port of <a href="tufte-md/">the original Tufte CSS page</a> along with the
-accompanying <a href="https://raw.githubusercontent.com/jez/tufte-pandoc-css/master/docs/tufte-md/index.md">source</a>.</p>
-<p>One goal of this project is to support as many of the features you’d
-“expect” to work that are available in Pandoc. If your favorite feature
-doesn’t work, let us know <a href="https://github.com/jez/tufte-pandoc-css/issues">with an
-issue</a>.</p>
+</span></span> that hopefully aids those of us who are more visual.</p>
+<p>It definitely feels good to go through the cycle of
+mis(no)understanding -&gt; search -&gt; understand -&gt; implement -&gt;
+create something new. I’m looking forward to do the same with a bunch of
+my old discrete math algorithms!</p>
 </section>
 </article>
 </body>
