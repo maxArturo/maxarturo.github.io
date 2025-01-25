@@ -20,6 +20,10 @@ time.
 
 </section>
 
+### 2025
+
+- [There are no rules (2025-01-25)](posts/2025-01-25-there-are-no-rules.html)
+
 ### 2023
 
 - [Giant shoulders (2023-11-20)](posts/2023-11-20-giant-shoulders.html)

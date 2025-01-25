@@ -1,6 +1,6 @@
 # [my humble Web Site](https://maxalcala.com)
 
-> *say why are you building yet another static site generator?*
+> _say why are you building yet another static site generator?_
 >
 > everyone
 
@@ -28,6 +28,16 @@ author: Max A
 
 ```
 
+## Installation (MacOS)
+
+```shell
+brew install pandoc \
+    jez/formulae/pandoc-sidenote \
+    fswatch
+```
+
 ## Usage
 
 `make` will `rm` and then create HTML files in the `docs` folder, ready for serving by GH pages. Check out the `makefile` for more details.
+
+If you want to see the resulting changes as you work, run `./watch_make.sh`.
